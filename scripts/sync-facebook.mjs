@@ -50,8 +50,13 @@ async function syncFacebookProducts() {
     const existingUrls = new Set(existingProducts.map((p) => p.facebookPostUrl));
     let newProductsAdded = 0;
 
+    // Cutoff: only posts from 22 Oct 2026 onward (Asia/Dhaka midnight) show on the website.
+    // Older posts are skipped so a later sync never re-adds them.
+    const CUTOFF_DATE = new Date('2026-10-22T00:00:00+06:00');
+
     for (const post of posts) {
       if (!post.full_picture || !post.message) continue; // Skip posts without image or text
+      if (post.created_time && new Date(post.created_time) < CUTOFF_DATE) continue; // Skip pre-22-Oct-2026 posts
 
       const postUrl = post.permalink_url || `https://facebook.com/${PAGE_ID}`;
       if (existingUrls.has(postUrl)) continue; // Avoid duplicate
