@@ -1,0 +1,33 @@
+name: Sync GlowBoost Products from Facebook
+
+on:
+  schedule:
+    - cron: '0 3,15 * * *' # Runs twice daily at 3:00 AM and 3:00 UTC (Morning & Evening)
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Facebook Sync Script
+        env:
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+        run: node scripts/sync-facebook.mjs
+
+      - name: Commit and push if products.json changed
+        run: |
+          git config --global user.name 'GlowBoost Bot'
+          git config --global user.email 'bot@glowboost.com'
+          git add src/data/products.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: auto-sync products from Facebook page [skip ci]" && git push)

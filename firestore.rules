@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Products: Public read for storefront, write for product catalog updates
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if true;
+    }
+
+    // Orders: Create on order placement, read/update for order management
+    match /orders/{orderId} {
+      allow read, create, update, delete: if true;
+    }
+
+    // Site Config: Read for site branding/whatsapp, write for admin settings
+    match /config/{configId} {
+      allow read, write: if true;
+    }
+
+    // Connection test document
+    match /test/{testId} {
+      allow read, write: if true;
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

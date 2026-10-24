@@ -1,0 +1,6 @@
+{
+  "name": "GlowBoost - 100% Authentic Beauty Products",
+  "description": "GlowBoost Facebook Page landing page and shop with WhatsApp ordering and future payment gateway architecture.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
