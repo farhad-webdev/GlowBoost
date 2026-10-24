@@ -84,6 +84,11 @@ function handleFirestoreError(error: unknown, operationType: OperationType, path
 }
 
 const PRODUCTS_KEY = 'glowboost_admin_products_v2';
+// Bump this whenever src/data/products.json changes, so browsers with an
+// older cached product list automatically reseed from the new bundle
+// instead of showing stale images/prices forever.
+const PRODUCTS_CACHE_VERSION = 'v2';
+const PRODUCTS_VERSION_KEY = 'glowboost_products_version';
 const ORDERS_KEY = 'glowboost_admin_orders_v2';
 const CONFIG_KEY = 'glowboost_admin_config_v2';
 const REVIEWS_KEY = 'glowboost_admin_reviews_v2';
@@ -208,8 +213,10 @@ const INITIAL_ORDERS: Order[] = [
 export function getStoredProducts(): Product[] {
   try {
     const raw = localStorage.getItem(PRODUCTS_KEY);
-    if (!raw) {
+    const ver = localStorage.getItem(PRODUCTS_VERSION_KEY);
+    if (!raw || ver !== PRODUCTS_CACHE_VERSION) {
       localStorage.setItem(PRODUCTS_KEY, JSON.stringify(INITIAL_PRODUCTS));
+      localStorage.setItem(PRODUCTS_VERSION_KEY, PRODUCTS_CACHE_VERSION);
       return INITIAL_PRODUCTS as Product[];
     }
     return JSON.parse(raw);
@@ -221,11 +228,12 @@ export function getStoredProducts(): Product[] {
 export function saveProducts(products: Product[]): void {
   try {
     localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
+    localStorage.setItem(PRODUCTS_VERSION_KEY, PRODUCTS_CACHE_VERSION);
     window.dispatchEvent(new Event('glowboost_products_updated'));
 
-    // Sync each product to Firestore
+    // Sync each product to Firestore, stamped with the cache version
     products.forEach((p) => {
-      setDoc(doc(db, 'products', p.id), p).catch((err) =>
+      setDoc(doc(db, 'products', p.id), { ...p, cacheVersion: PRODUCTS_CACHE_VERSION }).catch((err) =>
         handleFirestoreError(err, OperationType.WRITE, `products/${p.id}`)
       );
     });
@@ -517,8 +525,14 @@ export function initFirestoreSync() {
         snapshot.forEach((docSnap) => {
           firestoreProducts.push(docSnap.data() as Product);
         });
-        if (firestoreProducts.length > 0) {
-          localStorage.setItem(PRODUCTS_KEY, JSON.stringify(firestoreProducts));
+        // Ignore Firestore docs saved by older app versions (stale images):
+        // only apply docs stamped with the current cache version.
+        const stamped = firestoreProducts.filter(
+          (p) => (p as unknown as { cacheVersion?: string }).cacheVersion === PRODUCTS_CACHE_VERSION
+        );
+        if (stamped.length > 0) {
+          localStorage.setItem(PRODUCTS_KEY, JSON.stringify(stamped));
+          localStorage.setItem(PRODUCTS_VERSION_KEY, PRODUCTS_CACHE_VERSION);
           window.dispatchEvent(new Event('glowboost_products_updated'));
         }
       }
