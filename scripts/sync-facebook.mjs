@@ -76,7 +76,7 @@ async function syncFacebookProducts() {
         rating: 5.0,
         reviewsCount: 1,
         image: post.full_picture,
-        badge: 'নতুন ফেসবুক পোস্ট',
+        badge: 'স্কিন কেয়ার',
         benefit: description,
         benefits: [
           'গ্লোবুস্ট অফিশিয়াল ফেসবুক পেজ থেকে সরাসরি সিঙ্ক করা',
