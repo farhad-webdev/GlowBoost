@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const PAGE_ID = '61573758975647';
+const PAGE_ID = '552680001269348'; // Graph API Page ID (web profile ID 61573758975647 does NOT work in Graph calls)
 const TOKEN = process.env.FB_PAGE_TOKEN;
 const PRODUCTS_JSON_PATH = path.join(__dirname, '../src/data/products.json');
 
