@@ -5,3 +5,12 @@
     font-family: 'Noto Serif Bengali', serif;
   }
 }
+
+/* Product modal: hide the default grey scrollbar (scroll still works via wheel/touch) */
+.modal-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.modal-scroll::-webkit-scrollbar {
+  display: none;
+}

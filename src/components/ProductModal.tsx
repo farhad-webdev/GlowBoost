@@ -199,7 +199,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-sm animate-fadeIn overflow-y-auto">
       <div
-        className="bg-white border border-stone-200 rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto text-[#222222] shadow-2xl relative my-auto"
+        className="bg-white border border-stone-200 rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto modal-scroll text-[#222222] shadow-2xl relative my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Floating Close Button */}

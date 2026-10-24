@@ -57,6 +57,7 @@ async function syncFacebookProducts() {
     for (const post of posts) {
       if (!post.full_picture || !post.message) continue; // Skip posts without image or text
       if (post.created_time && new Date(post.created_time) < CUTOFF_DATE) continue; // Skip pre-22-Oct-2026 posts
+      if (post.permalink_url && post.permalink_url.includes('/reel/')) continue; // Skip Reels — website shows photo-post products only
 
       const postUrl = post.permalink_url || `https://facebook.com/${PAGE_ID}`;
       if (existingUrls.has(postUrl)) continue; // Avoid duplicate
