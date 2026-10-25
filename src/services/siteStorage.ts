@@ -83,11 +83,11 @@ function handleFirestoreError(error: unknown, operationType: OperationType, path
   console.error('Firestore Error:', JSON.stringify(errInfo));
 }
 
-const PRODUCTS_KEY = 'glowboost_admin_products_v2';
+const PRODUCTS_KEY = 'glowboost_admin_products_v3';
 // Bump this whenever src/data/products.json changes, so browsers with an
 // older cached product list automatically reseed from the new bundle
 // instead of showing stale images/prices forever.
-const PRODUCTS_CACHE_VERSION = 'v9';
+const PRODUCTS_CACHE_VERSION = 'v10';
 const PRODUCTS_VERSION_KEY = 'glowboost_products_version';
 const ORDERS_KEY = 'glowboost_admin_orders_v2';
 const CONFIG_KEY = 'glowboost_admin_config_v2';
