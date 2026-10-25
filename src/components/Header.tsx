@@ -30,7 +30,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart, onOpenAdm
           className="flex items-center gap-3 shrink-0 group cursor-pointer"
         >
           <div className="w-10 h-10 rounded-full overflow-hidden border border-[#D4A017]/40 shadow-lg shadow-[#D4A017]/20 group-hover:scale-105 transition-transform bg-[#141414] flex items-center justify-center shrink-0">
-            <img src="/logo.png" alt="GlowBoost" className="w-full h-full object-contain" />
+            <img src="https://drive.google.com/thumbnail?id=1Su39aNp_k2peyU1Hg9xuuQSUnye9NpYC&sz=w1000" alt="GlowBoost" className="w-full h-full object-contain" />
           </div>
           <div>
             <span className="text-xl font-bold tracking-tight text-white font-['Playfair_Display',serif]">
