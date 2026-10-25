@@ -62,7 +62,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
             বেস্ট সেলার ও সকল বিউটি প্রোডাক্টস
           </h2>
           <p className="text-stone-600 text-sm sm:text-base">
-            আমাদের প্রতিটি পণ্য ১০০% অরিজিনাল। সরাসরি দ্রুত কিনতে "হোয়াটসঅ্যাপে অর্ডার" বাটনে ক্লিক করুন অথবা কার্টে যোগ করুন।
+            আমাদের প্রতিটি পণ্য ১০০% অরিজিনাল। সরাসরি দ্রুত কিনতে "হোয়াটসঅ্যাপে অর্ডার"<br className="hidden md:block" /> বাটনে ক্লিক করুন অথবা কার্টে যোগ করুন।
           </p>
         </div>
 
