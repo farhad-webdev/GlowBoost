@@ -28,7 +28,7 @@ export const HowToOrder: React.FC = () => {
     <section className="py-20 bg-white text-[#222222] border-t border-stone-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+        <div className="text-left sm:text-center max-w-2xl sm:mx-auto mb-16 space-y-4">
           <span className="text-xs font-bold tracking-widest uppercase text-[#D4A017]">
             সহজ ৩ ধাপের প্রক্রিয়া
           </span>

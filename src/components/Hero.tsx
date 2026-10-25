@@ -110,10 +110,10 @@ export const Hero: React.FC<HeroProps> = ({ onSelectProduct, onAddToCart }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
           {/* Left Text Column */}
-          <div className="lg:col-span-7 space-y-6 sm:space-y-7">
+          <div className="lg:col-span-7 space-y-6 sm:space-y-7 text-left">
 
             {/* Main Headline with clean gold text and no background */}
-            <h1 className="text-2xl sm:text-4xl lg:text-[52px] font-bold text-[#141414] font-['Noto_Serif_Bengali',serif] leading-[1.35] sm:leading-[1.3] lg:leading-[1.25] tracking-tight">
+            <h1 className="text-[34px] sm:text-4xl lg:text-[52px] font-bold text-[#141414] font-['Noto_Serif_Bengali',serif] leading-[1.35] sm:leading-[1.3] lg:leading-[1.25] tracking-tight">
               {heroConfig.headlineMain}{' '}
               <span className="inline-block text-[#D4A017] font-extrabold">
                 {heroConfig.headlineHighlight}

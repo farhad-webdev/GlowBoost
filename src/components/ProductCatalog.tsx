@@ -54,7 +54,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
+        <div className="text-left sm:text-center max-w-2xl sm:mx-auto mb-12 space-y-4">
           <span className="text-xs font-bold tracking-widest uppercase text-[#D4A017]">
             অথেনটিক গ্লো কালেকশন · সারা বাংলাদেশে ক্যাশ অন ডেলিভারি
           </span>
