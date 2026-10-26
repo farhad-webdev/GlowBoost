@@ -374,14 +374,14 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
           </div>
         )}
 
-        {showViewAllButton && limit && visibleProducts.length > limit && (
+        {showViewAllButton && (
           <div className="text-center mt-10">
             <button
               type="button"
               onClick={onViewAll}
               className="px-8 py-3.5 rounded-full bg-gradient-to-r from-[#F5C542] via-[#D4A017] to-[#B8860B] text-[#141414] font-extrabold text-sm sm:text-base shadow-md hover:brightness-105 active:scale-[0.98] transition-all cursor-pointer"
             >
-              সব প্রোডাক্ট দেখুন ({visibleProducts.length}টি) →
+              সব প্রোডাক্ট দেখুন →
             </button>
             <p className="text-xs text-stone-500 mt-3">হোম পেজে লেটেস্ট {limit}টি প্রোডাক্ট দেখানো হচ্ছে</p>
           </div>
