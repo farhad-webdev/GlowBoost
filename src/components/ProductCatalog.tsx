@@ -6,13 +6,20 @@ import { Star, ShoppingBag, Eye, Search, CheckCircle2, MessageCircle } from 'luc
 interface ProductCatalogProps {
   onAddToCart: (product: Product) => void;
   onSelectProduct: (product: Product, initialStep?: 'details' | 'order') => void;
+  limit?: number;
+  showViewAllButton?: boolean;
+  onViewAll?: () => void;
+  fullFilters?: boolean;
+  heading?: string;
 }
 
-export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onSelectProduct }) => {
+export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onSelectProduct, limit, showViewAllButton, onViewAll, fullFilters, heading }) => {
   const [productsList, setProductsList] = useState<Product[]>(getStoredProducts());
   const [selectedCategory, setSelectedCategory] = useState<string>('সবগুলো');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedConcern, setSelectedConcern] = useState<string>('সব');
+  const [sortBy, setSortBy] = useState<string>('latest');
+  const [inStockOnly, setInStockOnly] = useState<boolean>(false);
   const [addedId, setAddedId] = useState<string | null>(null);
 
   // Sync products list when admin updates products
@@ -64,6 +71,18 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
     return matchesCategory && matchesSearch && matchesConcern;
   });
 
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    if (!fullFilters || sortBy === 'latest') return 0;
+    const pa = a.priceTk ?? a.price ?? 0, pb = b.priceTk ?? b.price ?? 0;
+    if (sortBy === 'priceAsc') return (pa || 999999) - (pb || 999999);
+    if (sortBy === 'priceDesc') return pb - pa;
+    if (sortBy === 'rating') return b.rating - a.rating;
+    if (sortBy === 'name') return a.name.localeCompare(b.name);
+    return 0;
+  });
+  const visibleProducts = inStockOnly ? sortedProducts.filter((pr) => pr.inStock !== false) : sortedProducts;
+  const displayedProducts = limit ? visibleProducts.slice(0, limit) : visibleProducts;
+
   const handleAddToCartClick = (product: Product, e: React.MouseEvent) => {
     e.stopPropagation();
     const priceVal = product.priceTk ?? product.price ?? 0;
@@ -91,7 +110,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
             অথেনটিক গ্লো কালেকশন · সারা বাংলাদেশে ক্যাশ অন ডেলিভারি
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold font-['Playfair_Display','Noto_Serif_Bengali',serif]">
-            বেস্ট সেলার ও সকল বিউটি প্রোডাক্টস
+            {heading || 'বেস্ট সেলার ও সকল বিউটি প্রোডাক্টস'}
           </h2>
           <p className="text-stone-600 text-sm sm:text-base">
             আমাদের প্রতিটি পণ্য ১০০% অরিজিনাল। সরাসরি দ্রুত কিনতে "হোয়াটসঅ্যাপে অর্ডার"<br className="hidden md:block" /> বাটনে ক্লিক করুন অথবা কার্টে যোগ করুন।
@@ -166,8 +185,25 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
           </div>
         </div>
 
+        {fullFilters && (
+          <div className="flex flex-wrap items-center gap-3 bg-white border border-stone-200 rounded-2xl px-4 py-3 shadow-xs">
+            <span className="text-xs font-bold text-stone-500">{displayedProducts.length}টি প্রোডাক্ট</span>
+            <label className="flex items-center gap-2 text-xs font-semibold text-stone-700 cursor-pointer">
+              <input type="checkbox" checked={inStockOnly} onChange={(e) => setInStockOnly(e.target.checked)} className="accent-[#D4A017] w-4 h-4" />
+              শুধু স্টকে থাকা
+            </label>
+            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="ml-auto px-3 py-2 bg-stone-50 border border-stone-200 rounded-full text-xs font-semibold text-stone-700 focus:outline-none focus:border-[#D4A017] cursor-pointer">
+              <option value="latest">সাজান: লেটেস্ট</option>
+              <option value="priceAsc">দাম: কম থেকে বেশি</option>
+              <option value="priceDesc">দাম: বেশি থেকে কম</option>
+              <option value="rating">রেটিং: বেশি থেকে কম</option>
+              <option value="name">নাম: A থেকে Z</option>
+            </select>
+          </div>
+        )}
+
         {/* Product Grid - 2 columns on mobile, 2 on sm, 3 on md, 4 on lg */}
-        {filteredProducts.length === 0 ? (
+        {displayedProducts.length === 0 ? (
           <div className="text-center py-16 bg-white rounded-3xl border border-stone-200 p-8 shadow-xs">
             <p className="text-base sm:text-lg font-medium text-stone-600">
               আপনার অনুসন্ধানের সাথে মিল রেখে কোনো প্রোডাক্ট পাওয়া যায়নি।
@@ -177,6 +213,8 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
                 setSelectedCategory('সবগুলো');
                 setSearchQuery('');
                 setSelectedConcern('সব');
+                setSortBy('latest');
+                setInStockOnly(false);
               }}
               className="mt-4 px-6 py-2.5 rounded-full bg-[#D4A017] text-white text-xs sm:text-sm font-bold hover:bg-[#B8860B] transition-colors cursor-pointer"
             >
@@ -185,7 +223,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-6">
-            {filteredProducts.map((product) => {
+            {displayedProducts.map((product) => {
               const priceVal = product.priceTk ?? product.price ?? 0;
               return (
                 <div
@@ -336,6 +374,18 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
           </div>
         )}
 
+        {showViewAllButton && limit && visibleProducts.length > limit && (
+          <div className="text-center mt-10">
+            <button
+              type="button"
+              onClick={onViewAll}
+              className="px-8 py-3.5 rounded-full bg-gradient-to-r from-[#F5C542] via-[#D4A017] to-[#B8860B] text-[#141414] font-extrabold text-sm sm:text-base shadow-md hover:brightness-105 active:scale-[0.98] transition-all cursor-pointer"
+            >
+              সব প্রোডাক্ট দেখুন ({visibleProducts.length}টি) →
+            </button>
+            <p className="text-xs text-stone-500 mt-3">হোম পেজে লেটেস্ট {limit}টি প্রোডাক্ট দেখানো হচ্ছে</p>
+          </div>
+        )}
       </div>
     </section>
   );

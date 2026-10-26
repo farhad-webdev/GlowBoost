@@ -6,9 +6,18 @@ interface HeaderProps {
   cartCount: number;
   onOpenCart: () => void;
   onOpenAdmin?: () => void;
+  currentPage?: 'home' | 'shop';
+  onNavigate?: (page: 'home' | 'shop') => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart, onOpenAdmin }) => {
+export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart, onOpenAdmin, currentPage, onNavigate }) => {
+  const goSection = (id: string) => (e: React.MouseEvent) => {
+    if (currentPage === 'shop' && onNavigate) {
+      e.preventDefault();
+      onNavigate('home');
+      setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }), 300);
+    }
+  };
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const config = getStoredSiteConfig();
   const whatsappNum = config.whatsappNumber;
@@ -45,12 +54,13 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart, onOpenAdm
 
           {/* Navigation Links */}
           <nav className="hidden lg:flex items-center gap-5 xl:gap-6 text-sm font-medium text-[#141414]/80">
-            <a href="#home" className="hover:text-[#D4A017] transition-colors whitespace-nowrap">হোম</a>
-            <a href="#products" className="hover:text-[#D4A017] transition-colors whitespace-nowrap">প্রোডাক্টস</a>
-            <a href="#why-us" className="hover:text-[#D4A017] transition-colors whitespace-nowrap">কেন আমরা</a>
-            <a href="#reviews" className="hover:text-[#D4A017] transition-colors whitespace-nowrap">রিভিউ</a>
-            <a href="#faq" className="hover:text-[#D4A017] transition-colors whitespace-nowrap">প্রশ্নোত্তর</a>
-            <a href="#contact" className="hover:text-[#D4A017] transition-colors whitespace-nowrap">যোগাযোগ</a>
+            <button onClick={() => onNavigate?.('home')} className="hover:text-[#D4A017] transition-colors whitespace-nowrap cursor-pointer">হোম</button>
+            <button onClick={() => onNavigate?.('shop')} className="hover:text-[#D4A017] transition-colors whitespace-nowrap cursor-pointer font-bold text-[#D4A017]">শপ</button>
+            <a href="#products" onClick={goSection('products')} className="hover:text-[#D4A017] transition-colors whitespace-nowrap">প্রোডাক্টস</a>
+            <a href="#why-us" onClick={goSection('why-us')} className="hover:text-[#D4A017] transition-colors whitespace-nowrap">কেন আমরা</a>
+            <a href="#reviews" onClick={goSection('reviews')} className="hover:text-[#D4A017] transition-colors whitespace-nowrap">রিভিউ</a>
+            <a href="#faq" onClick={goSection('faq')} className="hover:text-[#D4A017] transition-colors whitespace-nowrap">প্রশ্নোত্তর</a>
+            <a href="#contact" onClick={goSection('contact')} className="hover:text-[#D4A017] transition-colors whitespace-nowrap">যোগাযোগ</a>
           </nav>
 
           {/* Primary Actions */}
@@ -92,7 +102,8 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart, onOpenAdm
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden max-w-7xl mx-auto mt-3 bg-white rounded-3xl shadow-xl shadow-black/10 border border-black/5 px-6 py-6 space-y-4">
-          <a href="#home" onClick={() => setMobileMenuOpen(false)} className="block text-base font-medium text-[#141414] hover:text-[#D4A017]">হোম</a>
+          <button onClick={() => { setMobileMenuOpen(false); onNavigate?.('home'); }} className="block text-base font-medium text-[#141414] hover:text-[#D4A017]">হোম</button>
+          <button onClick={() => { setMobileMenuOpen(false); onNavigate?.('shop'); }} className="block text-base font-medium text-[#D4A017]">শপ</button>
           <a href="#products" onClick={() => setMobileMenuOpen(false)} className="block text-base font-medium text-[#141414] hover:text-[#D4A017]">প্রোডাক্টস</a>
           <a href="#why-us" onClick={() => setMobileMenuOpen(false)} className="block text-base font-medium text-[#141414] hover:text-[#D4A017]">কেন আমরা</a>
           <a href="#reviews" onClick={() => setMobileMenuOpen(false)} className="block text-base font-medium text-[#141414] hover:text-[#D4A017]">রিভিউ</a>

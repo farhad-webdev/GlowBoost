@@ -22,6 +22,17 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState<'home' | 'shop'>(() => (window.location.hash === '#shop' ? 'shop' : 'home'));
+  const goToPage = (page: 'home' | 'shop') => {
+    setCurrentPage(page);
+    window.location.hash = page === 'shop' ? '#shop' : '#home';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  React.useEffect(() => {
+    const onHash = () => setCurrentPage(window.location.hash === '#shop' ? 'shop' : 'home');
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
   const [deliveryDetails, setDeliveryDetails] = useState<{
     name: string;
     phone: string;
@@ -106,8 +117,19 @@ export default function App() {
         cartCount={totalCartCount}
         onOpenCart={() => setIsCartOpen(true)}
         onOpenAdmin={() => setIsAdminOpen(true)}
+        currentPage={currentPage}
+        onNavigate={goToPage}
       />
 
+      {currentPage === 'shop' ? (
+        <ProductCatalog
+          onAddToCart={(product) => handleAddToCart(product, 1)}
+          onSelectProduct={handleSelectProduct}
+          fullFilters
+          heading="সব প্রোডাক্ট"
+        />
+      ) : (
+        <>
       {/* 2. Hero Section */}
       <Hero
         onSelectProduct={handleSelectProduct}
@@ -117,10 +139,14 @@ export default function App() {
       {/* 3. Why GlowBoost (Why Us) */}
       <WhyUs />
 
-      {/* 4. Best Sellers / All Products Catalog */}
+      {/* 4. Latest Products (Home: latest 12 only) */}
       <ProductCatalog
         onAddToCart={(product) => handleAddToCart(product, 1)}
         onSelectProduct={handleSelectProduct}
+        limit={12}
+        showViewAllButton
+        onViewAll={() => goToPage('shop')}
+        heading="লেটেস্ট প্রোডাক্টস"
       />
 
       {/* 5. How to Order */}
@@ -131,6 +157,9 @@ export default function App() {
 
       {/* 7. FAQ */}
       <Faq />
+
+        </>
+      )}
 
       {/* 8. Footer */}
       <Footer onOpenAdmin={() => setIsAdminOpen(true)} />
