@@ -104,7 +104,8 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
     <section id="products" className="py-20 pt-24 sm:pt-28 scroll-mt-28 bg-[#FAF7F0] text-[#222222]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
+        {/* Section Header - hidden on Shop page, filters start directly */}
+        {!fullFilters && (
         <div className="text-left sm:text-center max-w-2xl sm:mx-auto mb-12 space-y-4">
           <span className="text-xs font-bold tracking-widest uppercase text-[#D4A017]">
             অথেনটিক গ্লো কালেকশন · সারা বাংলাদেশে ক্যাশ অন ডেলিভারি
@@ -116,6 +117,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
             আমাদের প্রতিটি পণ্য ১০০% অরিজিনাল। সরাসরি দ্রুত কিনতে "হোয়াটসঅ্যাপে অর্ডার"<br className="hidden md:block" /> বাটনে ক্লিক করুন অথবা কার্টে যোগ করুন।
           </p>
         </div>
+        )}
 
         {/* Filter & Search Bar - Professional stacked layout */}
         <div className="mb-8 space-y-4">
