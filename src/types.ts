@@ -15,6 +15,9 @@ export interface Product {
   ingredients?: string;
   howToUse?: string;
   inStock: boolean;
+  skinConcerns?: string[];
+  stockStatus?: 'in_stock' | 'low_stock' | 'out_of_stock';
+  highlightBadge?: 'best_seller' | 'new';
   facebookPostUrl?: string;
 }
 

@@ -12,6 +12,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
   const [productsList, setProductsList] = useState<Product[]>(getStoredProducts());
   const [selectedCategory, setSelectedCategory] = useState<string>('সবগুলো');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [selectedConcern, setSelectedConcern] = useState<string>('সব');
   const [addedId, setAddedId] = useState<string | null>(null);
 
   // Sync products list when admin updates products
@@ -23,13 +24,44 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
     return () => window.removeEventListener('glowboost_products_updated', handleSync);
   }, []);
 
+
+  const concernOptions = [
+    { key: 'সব', label: 'সব' },
+    { key: 'dry', label: 'শুষ্ক ত্বক' },
+    { key: 'oily', label: 'তৈলাক্ত ত্বক' },
+    { key: 'acne', label: 'ব্রণপ্রবণ' },
+    { key: 'sun', label: 'সান প্রোটেকশন' },
+  ];
+  const getConcerns = (product: Product): string[] => {
+    if (product.skinConcerns && product.skinConcerns.length > 0) return product.skinConcerns;
+    const text = (product.name + ' ' + product.benefit).toLowerCase();
+    const out: string[] = [];
+    if (text.includes('sunblock') || text.includes('sun cream') || text.includes('sunscreen') || text.includes('spf') || text.includes('sun ')) out.push('sun');
+    if (text.includes('hyaluronic') || text.includes('hydra') || text.includes('baume') || text.includes('moisturis') || text.includes('cream')) out.push('dry');
+    if (text.includes('cleansing oil') || text.includes('facial wash') || text.includes('water gel') || text.includes('oil')) out.push('oily');
+    if (text.includes('aha') || text.includes('bha') || text.includes('peeling') || text.includes('snail') || text.includes('centella')) out.push('acne');
+    return out;
+  };
+  const getStock = (product: Product): { label: string; cls: string; dot: string } => {
+    if (product.stockStatus === 'low_stock') return { label: 'কম স্টক', cls: 'text-amber-700 bg-amber-50 border-amber-200', dot: 'bg-amber-500' };
+    if (product.stockStatus === 'out_of_stock' || product.inStock === false) return { label: 'স্টক শেষ', cls: 'text-red-700 bg-red-50 border-red-200', dot: 'bg-red-500' };
+    return { label: 'স্টকে আছে', cls: 'text-emerald-700 bg-emerald-50 border-emerald-200', dot: 'bg-emerald-500' };
+  };
+  const getHighlight = (product: Product): string | null => {
+    if (product.highlightBadge === 'best_seller') return 'বেস্ট সেলার';
+    if (product.highlightBadge === 'new') return 'নতুন';
+    if (product.name.includes('Beauty of Joseon Relief Sun')) return 'বেস্ট সেলার';
+    if (product.name.includes('Neutrogena Ultra Sheer')) return 'নতুন';
+    return null;
+  };
   const categories = ['সবগুলো', 'স্কিন কেয়ার', 'সান কেয়ার', 'হেয়ার কেয়ার', 'গিফট কিট'];
 
   const filteredProducts = productsList.filter((product) => {
     const matchesCategory = selectedCategory === 'সবগুলো' || product.category === selectedCategory;
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           product.benefit.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
+    const matchesConcern = selectedConcern === 'সব' || getConcerns(product).includes(selectedConcern);
+    return matchesCategory && matchesSearch && matchesConcern;
   });
 
   const handleAddToCartClick = (product: Product, e: React.MouseEvent) => {
@@ -91,6 +123,29 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
             </div>
           </div>
 
+          {/* Skin Concern Filter Pills */}
+          <div className="w-full">
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth py-1 px-1 -mx-4 px-4 sm:mx-0 sm:px-0">
+              <span className="text-xs font-bold text-stone-500 whitespace-nowrap shrink-0">ত্বকের ধরন:</span>
+              {concernOptions.map((c) => {
+                const isActive = selectedConcern === c.key;
+                return (
+                  <button
+                    key={c.key}
+                    onClick={() => setSelectedConcern(c.key)}
+                    className={`px-4 py-2 text-xs font-semibold rounded-full transition-all whitespace-nowrap shrink-0 cursor-pointer ${
+                      isActive
+                        ? 'bg-[#141414] text-white shadow-md'
+                        : 'bg-white text-stone-700 border border-stone-200 hover:border-[#D4A017] hover:text-[#141414] shadow-xs'
+                    }`}
+                  >
+                    {c.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Search Box with Clear Button */}
           <div className="relative w-full md:w-80 shrink-0">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
@@ -124,6 +179,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
               onClick={() => {
                 setSelectedCategory('সবগুলো');
                 setSearchQuery('');
+                setSelectedConcern('সব');
               }}
               className="mt-4 px-6 py-2.5 rounded-full bg-[#D4A017] text-white text-xs sm:text-sm font-bold hover:bg-[#B8860B] transition-colors cursor-pointer"
             >
@@ -150,6 +206,13 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
                         referrerPolicy="no-referrer"
                         loading="lazy"
                       />
+
+                      {/* Highlight Badge: Best Seller / New */}
+                      {getHighlight(product) && (
+                        <span className="absolute top-2 right-11 sm:top-3 sm:right-12 bg-[#141414] text-white text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-full uppercase tracking-wider shadow-sm z-10 pointer-events-none">
+                          {getHighlight(product)}
+                        </span>
+                      )}
 
                       {/* Badge */}
                       {product.badge && (
@@ -200,6 +263,14 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
                       {/* Short Benefit */}
                       <p className="text-[10px] sm:text-xs text-stone-600 line-clamp-2 leading-relaxed">
                         {product.benefit}
+                      </p>
+
+                      {/* Stock Status */}
+                      <p className="pt-1">
+                        <span className={`inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full border ${getStock(product).cls}`}>
+                          <span className={`w-1.5 h-1.5 rounded-full ${getStock(product).dot}`}></span>
+                          {getStock(product).label}
+                        </span>
                       </p>
 
                     </div>
