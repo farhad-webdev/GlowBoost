@@ -101,7 +101,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
   };
 
   return (
-    <section id="products" className="py-20 bg-[#FAF7F0] text-[#222222]">
+    <section id="products" className="py-20 pt-24 sm:pt-28 scroll-mt-28 bg-[#FAF7F0] text-[#222222]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -118,7 +118,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
         </div>
 
         {/* Filter & Search Bar - Professional stacked layout */}
-        <div className="mb-10 space-y-4">
+        <div className="mb-8 space-y-4">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             {/* Category Filter Pills */}
             <div className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth py-1">
@@ -186,7 +186,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
         </div>
 
         {fullFilters && (
-          <div className="flex flex-wrap items-center gap-3 bg-white border border-stone-200 rounded-2xl px-4 py-3 shadow-xs">
+          <div className="flex flex-wrap items-center gap-3 bg-white border border-stone-200 rounded-2xl px-4 py-3 shadow-xs mb-8">
             <span className="text-xs font-bold text-stone-500">{displayedProducts.length}টি প্রোডাক্ট</span>
             <label className="flex items-center gap-2 text-xs font-semibold text-stone-700 cursor-pointer">
               <input type="checkbox" checked={inStockOnly} onChange={(e) => setInStockOnly(e.target.checked)} className="accent-[#D4A017] w-4 h-4" />
