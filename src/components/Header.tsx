@@ -32,7 +32,6 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart, onOpenAdm
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const config = getStoredSiteConfig();
   const whatsappNum = config.whatsappNumber;
-  const tagline = config.brandTagline;
 
   return (
     <header id="home" className="sticky top-3 sm:top-4 z-40 px-3 sm:px-6">
@@ -50,15 +49,12 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart, onOpenAdm
             }}
             className="flex items-center gap-3 shrink-0 group cursor-pointer"
           >
-            <div className="w-10 h-10 rounded-full overflow-hidden border border-[#D4A017]/40 shadow-lg shadow-[#D4A017]/20 group-hover:scale-105 transition-transform bg-[#141414] flex items-center justify-center shrink-0">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border border-[#D4A017]/40 shadow-lg shadow-[#D4A017]/20 group-hover:scale-105 transition-transform bg-[#141414] flex items-center justify-center shrink-0">
               <img src="https://drive.google.com/thumbnail?id=1Su39aNp_k2peyU1Hg9xuuQSUnye9NpYC&sz=w1000" alt="GlowBoost" className="w-full h-full object-contain" />
             </div>
             <div>
-              <span className="text-xl font-bold tracking-tight text-[#141414] font-['Playfair_Display',serif]">
+              <span className="text-xl sm:text-2xl font-bold tracking-tight text-[#141414] font-['Playfair_Display',serif]">
                 Glow<span className="text-[#D4A017]">Boost</span>
-              </span>
-              <span className="block text-[11px] tracking-wide text-[#141414]/60 font-medium">
-                {tagline}
               </span>
             </div>
           </a>
