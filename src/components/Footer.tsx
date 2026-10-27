@@ -82,7 +82,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 hover:text-[#F5C542] transition-colors"
                 >
-                  <Facebook className="w-4 h-4 text-[#F5C542]" /> অফিশিয়াল ফেসবুক পেজ
+                  <Facebook className="w-4 h-4 text-[#F5C542]" /> @GlowBoostBD
                 </a>
               </li>
               <li>
@@ -92,7 +92,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 hover:text-[#F5C542] transition-colors"
                 >
-                  <Instagram className="w-4 h-4 text-[#F5C542]" /> ইনস্টাগ্রাম: @glowboostbd
+                  <Instagram className="w-4 h-4 text-[#F5C542]" /> @glowboostbd
                 </a>
               </li>
             </ul>
