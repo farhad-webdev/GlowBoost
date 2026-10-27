@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShoppingBag, MessageCircle, Menu, X, ShieldCheck } from 'lucide-react';
+import { ShoppingBag, MessageCircle, Menu, X, ShieldCheck, Search } from 'lucide-react';
 import { getStoredSiteConfig } from '../services/siteStorage';
 
 interface HeaderProps {
@@ -8,9 +8,20 @@ interface HeaderProps {
   onOpenAdmin?: () => void;
   currentPage?: 'home' | 'shop';
   onNavigate?: (page: 'home' | 'shop') => void;
+  onHeaderSearch?: (query: string) => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart, onOpenAdmin, currentPage, onNavigate }) => {
+export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart, onOpenAdmin, currentPage, onNavigate, onHeaderSearch }) => {
+  const [headerQuery, setHeaderQuery] = React.useState('');
+  const submitHeaderSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const q = headerQuery.trim();
+    if (!q) return;
+    if (currentPage !== 'shop') onNavigate?.('shop');
+    onHeaderSearch?.(q);
+    setMobileMenuOpen(false);
+    setTimeout(() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' }), 350);
+  };
   const goSection = (id: string) => (e: React.MouseEvent) => {
     if (currentPage === 'shop' && onNavigate) {
       e.preventDefault();
@@ -63,6 +74,22 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart, onOpenAdm
             <a href="#contact" onClick={goSection('contact')} className="hover:text-[#D4A017] transition-colors whitespace-nowrap">যোগাযোগ</a>
           </nav>
 
+          {/* Header Search - desktop */}
+          <form onSubmit={submitHeaderSearch} className="hidden md:flex items-center flex-1 max-w-xs xl:max-w-sm relative" role="search">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 pointer-events-none" />
+            <input
+              type="text"
+              value={headerQuery}
+              onChange={(e) => setHeaderQuery(e.target.value)}
+              placeholder="প্রোডাক্ট খুঁজুন... (যেমন: CeraVe, Sunblock)"
+              aria-label="প্রোডাক্ট খুঁজুন"
+              className="w-full pl-10 pr-9 py-2.5 bg-stone-50 border border-stone-200 rounded-full text-sm text-[#141414] placeholder-stone-400 focus:outline-none focus:border-[#D4A017] focus:bg-white transition-colors"
+            />
+            {headerQuery && (
+              <button type="button" onClick={() => setHeaderQuery('')} aria-label="সার্চ মুছুন" className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 text-xs p-1 cursor-pointer">✕</button>
+            )}
+          </form>
+
           {/* Primary Actions */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
 
@@ -102,6 +129,17 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart, onOpenAdm
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="lg:hidden max-w-7xl mx-auto mt-3 bg-white rounded-3xl shadow-xl shadow-black/10 border border-black/5 px-6 py-6 space-y-4">
+          <form onSubmit={submitHeaderSearch} className="relative" role="search">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 pointer-events-none" />
+            <input
+              type="text"
+              value={headerQuery}
+              onChange={(e) => setHeaderQuery(e.target.value)}
+              placeholder="প্রোডাক্ট খুঁজুন..."
+              aria-label="প্রোডাক্ট খুঁজুন"
+              className="w-full pl-11 pr-4 py-3 bg-stone-50 border border-stone-200 rounded-full text-sm text-[#141414] placeholder-stone-400 focus:outline-none focus:border-[#D4A017]"
+            />
+          </form>
           <button onClick={() => { setMobileMenuOpen(false); onNavigate?.('home'); }} className="block text-base font-medium text-[#141414] hover:text-[#D4A017]">হোম</button>
           <button onClick={() => { setMobileMenuOpen(false); onNavigate?.('shop'); }} className="block text-base font-medium text-[#D4A017]">শপ</button>
           <a href="#products" onClick={() => setMobileMenuOpen(false)} className="block text-base font-medium text-[#141414] hover:text-[#D4A017]">প্রোডাক্টস</a>

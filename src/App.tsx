@@ -22,6 +22,7 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
+  const [headerSearch, setHeaderSearch] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<'home' | 'shop'>(() => (window.location.hash === '#shop' ? 'shop' : 'home'));
   const goToPage = (page: 'home' | 'shop') => {
     setCurrentPage(page);
@@ -119,6 +120,7 @@ export default function App() {
         onOpenAdmin={() => setIsAdminOpen(true)}
         currentPage={currentPage}
         onNavigate={goToPage}
+        onHeaderSearch={(q) => setHeaderSearch(q)}
       />
 
       {currentPage === 'shop' ? (
@@ -127,6 +129,7 @@ export default function App() {
           onSelectProduct={handleSelectProduct}
           fullFilters
           heading="সব প্রোডাক্ট"
+          externalSearchQuery={headerSearch}
         />
       ) : (
         <>
@@ -147,6 +150,7 @@ export default function App() {
         showViewAllButton
         onViewAll={() => goToPage('shop')}
         heading="লেটেস্ট প্রোডাক্টস"
+        externalSearchQuery={headerSearch}
       />
 
       {/* 5. How to Order */}

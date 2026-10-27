@@ -11,12 +11,16 @@ interface ProductCatalogProps {
   onViewAll?: () => void;
   fullFilters?: boolean;
   heading?: string;
+  externalSearchQuery?: string;
 }
 
-export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onSelectProduct, limit, showViewAllButton, onViewAll, fullFilters, heading }) => {
+export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onSelectProduct, limit, showViewAllButton, onViewAll, fullFilters, heading, externalSearchQuery }) => {
   const [productsList, setProductsList] = useState<Product[]>(getStoredProducts());
   const [selectedCategory, setSelectedCategory] = useState<string>('সবগুলো');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  useEffect(() => {
+    if (externalSearchQuery !== undefined) setSearchQuery(externalSearchQuery);
+  }, [externalSearchQuery]);
   const [selectedConcern, setSelectedConcern] = useState<string>('সব');
   const [sortBy, setSortBy] = useState<string>('latest');
   const [inStockOnly, setInStockOnly] = useState<boolean>(false);
