@@ -1,5 +1,27 @@
 [
   {
+    "id": "fb-cerave-am-20261026",
+    "name": "CeraVe AM Facial Moisturizing Lotion with Sunscreen Broad Spectrum SPF 30 89ml",
+    "category": "স্কিন কেয়ার",
+    "priceTk": null,
+    "originalPrice": null,
+    "rating": 5,
+    "reviewsCount": 1,
+    "image": "https://drive.google.com/thumbnail?id=1C0FeQ2WXghJYcwE6m_OYx6qtREX3ioY6&sz=w1000",
+    "badge": "স্কিন কেয়ার",
+    "benefit": "CeraVe AM Facial Moisturizing Lotion SPF 30 (89ml) — সকালের ময়েশ্চারাইজার + সানস্ক্রিন একসাথে। ৩টি এসেনশিয়াল সিরামাইড, নিয়াসিনামাইড ও হায়ালুরোনিক অ্যাসিড ত্বকের ব্যারিয়ার মেরামত করে, আর্দ্রতা ধরে রাখে ও ব্রড-স্পেক্ট্রাম SPF 30 সুরক্ষা দেয় — অয়েল-ফ্রি, নন-কমেডোজেনিক, প্রতিদিনের ব্যবহারের জন্য।",
+    "benefits": [
+      "ব্রড-স্পেক্ট্রাম SPF 30 — UVA/UVB থেকে দৈনিক সান প্রোটেকশন",
+      "৩টি এসেনশিয়াল সিরামাইড (১, ৩, ৬-II) ত্বকের ব্যারিয়ার মেরামত ও সুরক্ষা দেয়",
+      "নিয়াসিনামাইড ত্বককে শান্ত করে ও টোন উন্নত করতে সাহায্য করে",
+      "হায়ালুরোনিক অ্যাসিড গভীর আর্দ্রতা ধরে রাখে, ত্বক থাকে নরম ও মসৃণ"
+    ],
+    "ingredients": "৩টি এসেনশিয়াল সিরামাইড, নিয়াসিনামাইড ও হায়ালুরোনিক অ্যাসিড, MVE ডেলিভারি টেকনোলজি — সম্পূর্ণ উপাদান তালিকা পণ্যের প্যাকেজিংয়ে দেওয়া আছে।",
+    "howToUse": "সকালে মুখ ও ঘাড়ে পরিমাণমতো লাগান, বাইরে যাওয়ার আগে। প্রয়োজনে পুনরায় লাগান।",
+    "inStock": true,
+    "facebookPostUrl": "https://www.facebook.com/122218596836791965/posts/122219010866791965"
+  },
+  {
     "id": "fb-1792938544606-qtpi",
     "name": "Neutrogena Ultra Sheer Dry Touch Sunblock SPF 50+ PA++++ (88ml)",
     "category": "স্কিন কেয়ার",
@@ -9,15 +31,15 @@
     "reviewsCount": 1,
     "image": "https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-6/860457706_122218846142791965_4024123864484714729_n.jpg?stp=dst-jpg_s720x720_tt6&_nc_cat=105&ccb=1-7&_nc_sid=127cfc&_nc_eui2=AeFCdH6kXo3q7yxvA75BEFOZmuLSnv6xoM6a4tKe_rGgzjucFdGEgvp9Obgli-8PfYGY98TQes21n-iYKVCP_1ZI&_nc_ohc=0p5JgOeOIoMQ7kNvwE6U-5K&_nc_oc=Adp8XKyB2esMYiI5qDSrKfDGOY52EQvPcJLOK2MpMwkA7Do7R-TgDQWiZUGO_HThMfo&_nc_zt=23&_nc_ht=scontent-sjc3-1.xx&edm=AKIiGfEEAAAA&_nc_gid=tZI26mNIo0zSRb7539oLbw&_nc_tpa=Q5bMBQJsUmCoH6MU9TbviWpDTKNK08VgG1vTAp8QhNF_lGNyaf-rKv1vDA7hBjmz5j40_1wJQlQGRBBx7w&oh=00_AQMqopwXvXmH-ZQsS-EiVeM8jqsLIy16_P5SZRD-Y-NFcQ&oe=6AE3EAF3",
     "badge": "স্কিন কেয়ার",
-    "benefit": "Neutrogena Ultra Sheer Dry Touch Sunblock SPF 50+ PA++++ (88ml) is a lightweight, dry-touch sunblock with Helioplex broad-spectrum UVA/UVB protection. It absorbs quickly, leaves no sticky or greasy feeling, is water resistant, and sits comfortably under makeup — for everyday outdoor sun care.",    
+    "benefit": "Neutrogena Ultra Sheer Dry Touch Sunblock SPF 50+ PA++++ (88ml) is a lightweight, dry-touch sunblock with Helioplex broad-spectrum UVA/UVB protection. It absorbs quickly, leaves no sticky or greasy feeling, is water resistant, and sits comfortably under makeup — for everyday outdoor sun care.",
     "benefits": [
-              "SPF 50+ PA++++ — উচ্চ মাত্রার UVA/UVB সুরক্ষা দেয়",
+      "SPF 50+ PA++++ — উচ্চ মাত্রার UVA/UVB সুরক্ষা দেয়",
       "ড্রাই-টাচ ফিনিশ — ত্বকে চিটচিটে বা তেলতেলে ভাব থাকে না",
       "ওয়াটার রেজিস্ট্যান্ট — ঘাম বা পানিতে সহজে উঠে যায় না",
       "হালকা টেক্সচার — প্রতিদিন ব্যবহারের জন্য উপযোগী, মেকআপের নিচেও ভালোভাবে বসে"
     ],
-        "ingredients": "Helioplex™ ব্রড-স্পেক্ট্রাম UVA/UVB সান প্রোটেক্শন ফোর্মুলা — সম্পূর্ণ উপাদান তালিকা পণ্যের প্যাকেজিংয়ে দেওয়া আছে।",
-        "howToUse": "বাইরে যাওয়ার ১৫-২০ মিনিট আগে মুখে ও উন্মুক্ত ত্বকে উপযুক্ত পরিমাণ লাগান। ঘাম, সাঁতার বা তোয়ালে মোছার পর পুনরায় লাগান।",
+    "ingredients": "Helioplex™ ব্রড-স্পেক্ট্রাম UVA/UVB সান প্রোটেক্শন ফোর্মুলা — সম্পূর্ণ উপাদান তালিকা পণ্যের প্যাকেজিংয়ে দেওয়া আছে।",
+    "howToUse": "বাইরে যাওয়ার ১৫-২০ মিনিট আগে মুখে ও উন্মুক্ত ত্বকে উপযুক্ত পরিমাণ লাগান। ঘাম, সাঁতার বা তোয়ালে মোছার পর পুনরায় লাগান।",
     "inStock": true,
     "facebookPostUrl": "https://www.facebook.com/122218596836791965/posts/122218846364791965"
   },
