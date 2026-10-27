@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageCircle, Mail, Facebook, ShieldCheck, Heart, Lock } from 'lucide-react';
+import { MessageCircle, Mail, Facebook, Instagram, ShieldCheck, Heart, Lock } from 'lucide-react';
 import { getStoredSiteConfig } from '../services/siteStorage';
 
 interface FooterProps {
@@ -22,7 +22,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
           <div className="space-y-4 md:col-span-1.5">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full overflow-hidden border border-[#D4A017]/40 shadow bg-[#141414] flex items-center justify-center shrink-0">
-                <img src="https://drive.google.com/thumbnail?id=1Su39aNp_k2peyU1Hg9xuuQSUnye9NpYC&sz=w1000" alt="GlowBoost" className="w-full h-full object-contain" />
+                <img src="/logo.png" alt="GlowBoost" className="w-full h-full object-contain" />
               </div>
               <span className="text-xl font-bold tracking-tight text-white font-['Playfair_Display',serif]">
                 Glow<span className="text-[#F5C542]">Boost</span>
@@ -83,6 +83,16 @@ export const Footer: React.FC<FooterProps> = ({ onOpenAdmin }) => {
                   className="flex items-center gap-2 hover:text-[#F5C542] transition-colors"
                 >
                   <Facebook className="w-4 h-4 text-[#F5C542]" /> অফিশিয়াল ফেসবুক পেজ
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/glowboostbd/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-[#F5C542] transition-colors"
+                >
+                  <Instagram className="w-4 h-4 text-[#F5C542]" /> ইনস্টাগ্রাম: @glowboostbd
                 </a>
               </li>
             </ul>
