@@ -36,7 +36,7 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart, onOpenAdm
   return (
     <header id="home" className="sticky top-3 sm:top-4 z-40 px-3 sm:px-6">
       <div className="max-w-7xl mx-auto bg-white rounded-full shadow-xl shadow-black/10 border border-black/5 text-[#141414]">
-        <div className="px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-4 sm:gap-6">
+        <div className="h-16 sm:h-20 flex items-center justify-between gap-4 sm:gap-6" style={{ paddingLeft: 11, paddingRight: 18 }}>
 
           {/* Logo & Brand - Secret Ctrl + Shift + Click trigger for Admin Portal */}
           <a
@@ -52,7 +52,8 @@ export const Header: React.FC<HeaderProps> = ({ cartCount, onOpenCart, onOpenAdm
             <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border border-[#D4A017]/40 shadow-lg shadow-[#D4A017]/20 group-hover:scale-105 transition-transform bg-[#141414] flex items-center justify-center shrink-0">
               <img src="https://drive.google.com/thumbnail?id=1Su39aNp_k2peyU1Hg9xuuQSUnye9NpYC&sz=w1000" alt="GlowBoost" className="w-full h-full object-contain" />
             </div>
-            <div>
+            {/* Wordmark hidden per user request - logo emblem only */}
+            <div className="hidden">
               <span className="text-xl sm:text-2xl font-bold tracking-tight text-[#141414] font-['Playfair_Display',serif]">
                 Glow<span className="text-[#D4A017]">Boost</span>
               </span>
