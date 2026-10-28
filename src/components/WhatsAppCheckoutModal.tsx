@@ -2,13 +2,14 @@ import React from 'react';
 import { CartItem } from '../types';
 import { X, MessageCircle, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { WHATSAPP_NUMBER, COD_MESSAGE } from '../config';
+import { paymentMethodLabel } from '../checkout/whatsappCheckout';
 import { addOrderRecord } from '../services/siteStorage';
 
 interface WhatsAppCheckoutModalProps {
   isOpen: boolean;
   onClose: () => void;
   items: CartItem[];
-  deliveryDetails: { name: string; phone: string; address: string; location: string; deliveryFee: number } | null;
+  deliveryDetails: { name: string; phone: string; address: string; location: string; deliveryFee: number; paymentMethod?: import('../types').PaymentMethod; transactionId?: string } | null;
 }
 
 export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
@@ -29,7 +30,7 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
     })
     .join('\n');
 
-  const message = `*আসসালামু আলাইকুম GlowBoost! আমি অর্ডার করতে চাই:* 🛍️\n\n*গ্রাহকের তথ্য:*\n• নাম: ${deliveryDetails.name}\n• ফোন নম্বর: ${deliveryDetails.phone}\n• ঠিকানা: ${deliveryDetails.address}\n• ডেলিভারি এলাকা: ${deliveryDetails.location}\n\n*অর্ডারকৃত পণ্যসমূহ:*\n${itemsListText}\n\n*পণ্যের মূল্য:* ৳${subtotal}\n*ডেলিভারি চার্জ:* ৳${deliveryDetails.deliveryFee}\n*সর্বমোট প্রদেয়:* ৳${total}\n\n_${COD_MESSAGE}_\n_দয়া করে আমার অর্ডারটি কনফার্ম করুন!_`;
+  const message = `*আসসালামু আলাইকুম GlowBoost! আমি অর্ডার করতে চাই:* 🛍️\n\n*গ্রাহকের তথ্য:*\n• নাম: ${deliveryDetails.name}\n• ফোন নম্বর: ${deliveryDetails.phone}\n• ঠিকানা: ${deliveryDetails.address}\n• ডেলিভারি এলাকা: ${deliveryDetails.location}\n• পেমেন্ট: ${paymentMethodLabel(deliveryDetails.paymentMethod)}${deliveryDetails.transactionId ? `\n• Transaction ID: ${deliveryDetails.transactionId}` : ''}\n\n*অর্ডারকৃত পণ্যসমূহ:*\n${itemsListText}\n\n*পণ্যের মূল্য:* ৳${subtotal}\n*ডেলিভারি চার্জ:* ৳${deliveryDetails.deliveryFee}\n*সর্বমোট প্রদেয়:* ৳${total}\n\n_${deliveryDetails.paymentMethod && deliveryDetails.paymentMethod !== 'cod' ? 'পেমেন্ট ম্যানুয়ালি যাচাই করে কনফার্ম করবেন' : COD_MESSAGE}_\n_দয়া করে আমার অর্ডারটি কনফার্ম করুন!_`;
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
@@ -81,8 +82,11 @@ export const WhatsAppCheckoutModal: React.FC<WhatsAppCheckoutModalProps> = ({
             <span>সর্বমোট প্রদেয়:</span>
             <span className="text-[#D4A017]">৳{total}</span>
           </div>
+          <div className="text-xs text-stone-700 pt-1">
+            পেমেন্ট: <b>{paymentMethodLabel(deliveryDetails.paymentMethod)}</b>{deliveryDetails.transactionId ? ` — Transaction ID: ${deliveryDetails.transactionId}` : ''}
+          </div>
           <div className="text-[11px] text-emerald-700 font-medium text-center pt-1">
-            ✓ {COD_MESSAGE}
+            ✓ {deliveryDetails.paymentMethod && deliveryDetails.paymentMethod !== 'cod' ? 'পেমেন্ট ম্যানুয়ালি যাচাই করে অর্ডার কনফার্ম করা হবে' : COD_MESSAGE}
           </div>
         </div>
 

@@ -8,6 +8,7 @@ import {
   openWhatsAppSingleProduct,
   normalizeBdPhone,
   isValidBdPhone,
+  paymentMethodLabel,
 } from './whatsappCheckout';
 import { initializeOnlinePayment } from './paymentCheckout';
 
@@ -16,6 +17,7 @@ export {
   generateSingleProductOrderUrl,
   normalizeBdPhone,
   isValidBdPhone,
+  paymentMethodLabel,
 };
 export type { CheckoutDetails, SingleProductOrderDetails };
 

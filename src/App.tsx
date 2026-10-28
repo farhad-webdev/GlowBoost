@@ -40,6 +40,8 @@ export default function App() {
     address: string;
     location: string;
     deliveryFee: number;
+    paymentMethod?: import('./types').PaymentMethod;
+    transactionId?: string;
   } | null>(null);
 
   // Initialize Firebase Firestore sync

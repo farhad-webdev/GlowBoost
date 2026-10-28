@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { CartItem, CheckoutMode } from '../types';
+import { CartItem, CheckoutMode, PaymentMethod } from '../types';
 import { X, Trash2, Plus, Minus, ShoppingBag, MessageCircle, CreditCard, ShieldCheck } from 'lucide-react';
-import { ORDER_MODE, COD_MESSAGE } from '../config';
+import { ORDER_MODE, COD_MESSAGE, MANUAL_PAYMENT } from '../config';
 import { processCheckout } from '../checkout';
 
 interface CartDrawerProps {
@@ -10,7 +10,7 @@ interface CartDrawerProps {
   items: CartItem[];
   onUpdateQuantity: (productId: string, delta: number) => void;
   onRemoveItem: (productId: string) => void;
-  onOpenWhatsAppCheckout: (deliveryDetails: { name: string; phone: string; address: string; location: string; deliveryFee: number }) => void;
+  onOpenWhatsAppCheckout: (deliveryDetails: { name: string; phone: string; address: string; location: string; deliveryFee: number; paymentMethod?: PaymentMethod; transactionId?: string }) => void;
 }
 
 export const CartDrawer: React.FC<CartDrawerProps> = ({
@@ -28,6 +28,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
   const [address, setAddress] = useState('');
   const [gatewaySimulated, setGatewaySimulated] = useState(false);
   const [formError, setFormError] = useState<string | null>(null);
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('cod');
+  const [transactionId, setTransactionId] = useState('');
 
   if (!isOpen) return null;
 
@@ -42,6 +44,10 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
       setFormError('অনুগ্রহ করে আপনার নাম, মোবাইল নম্বর এবং সম্পূর্ণ ডেলিভারি ঠিকানা লিখুন।');
       return;
     }
+    if ((paymentMethod === 'bkash' || paymentMethod === 'nagad') && !transactionId.trim()) {
+      setFormError('bKash/Nagad-এ টাকা পাঠানোর পর Transaction ID লিখুন।');
+      return;
+    }
 
     const details = {
       name,
@@ -49,6 +55,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
       address,
       location: deliveryLocation === 'dhaka' ? 'ঢাকার ভেতরে (৳৬০)' : 'ঢাকার বাইরে (৳১২০)',
       deliveryFee,
+      paymentMethod,
+      transactionId: transactionId.trim() || undefined,
     };
 
     await processCheckout(items, details, () => {
@@ -258,9 +266,57 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   </div>
                 </div>
 
+                {/* Payment Method selector — manual payment, verified by GlowBoost */}
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-stone-600">পেমেন্ট মেথড নির্বাচন করুন</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {([
+                      ['cod', 'Cash on Delivery'],
+                      ['bkash', 'bKash'],
+                      ['nagad', 'Nagad'],
+                      ['bank', 'Bank Transfer'],
+                    ] as [PaymentMethod, string][]).map(([method, label]) => (
+                      <button
+                        key={method}
+                        type="button"
+                        onClick={() => setPaymentMethod(method)}
+                        className={`py-2 px-3 rounded-xl text-xs font-semibold border transition-all ${
+                          paymentMethod === method
+                            ? 'bg-[#D4A017]/10 border-[#D4A017] text-[#D4A017]'
+                            : 'bg-white border-stone-300 text-stone-700'
+                        }`}
+                      >
+                        {label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {paymentMethod === 'bkash' && (
+                  <div className="p-3 rounded-xl bg-pink-50 border border-pink-200 text-xs text-stone-700 space-y-1">
+                    <p><b>bKash Send Money</b> করুন: <b>{MANUAL_PAYMENT.bkashNumber}</b> ({MANUAL_PAYMENT.bkashType})</p>
+                    <p>টাকা পাঠানোর পর নিচে Transaction ID লিখুন। GlowBoost পেমেন্ট ম্যানুয়ালি যাচাই করে অর্ডার কনফার্ম করবে।</p>
+                    <input type="text" placeholder="Transaction ID * (যেমন: 9HX7...)" value={transactionId} onChange={(e) => setTransactionId(e.target.value)} className="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#D4A017]" />
+                  </div>
+                )}
+                {paymentMethod === 'nagad' && (
+                  <div className="p-3 rounded-xl bg-orange-50 border border-orange-200 text-xs text-stone-700 space-y-1">
+                    <p><b>Nagad Send Money</b> করুন: <b>{MANUAL_PAYMENT.nagadNumber}</b></p>
+                    <p>টাকা পাঠানোর পর নিচে Transaction ID লিখুন। GlowBoost পেমেন্ট ম্যানুয়ালি যাচাই করে অর্ডার কনফার্ম করবে।</p>
+                    <input type="text" placeholder="Transaction ID *" value={transactionId} onChange={(e) => setTransactionId(e.target.value)} className="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#D4A017]" />
+                  </div>
+                )}
+                {paymentMethod === 'bank' && (
+                  <div className="p-3 rounded-xl bg-sky-50 border border-sky-200 text-xs text-stone-700 space-y-1">
+                    <p><b>{MANUAL_PAYMENT.bankName}</b> — অ্যাকাউন্ট: {MANUAL_PAYMENT.bankAccountName}, নম্বর: <b>{MANUAL_PAYMENT.bankAccountNumber}</b>, ব্রাঞ্চ: {MANUAL_PAYMENT.bankBranch}</p>
+                    <p>ট্রান্সফার করার পর রেফারেন্স/স্লিপ নম্বর (যদি থাকে) নিচে লিখুন। GlowBoost পেমেন্ট ম্যানুয়ালি যাচাই করে অর্ডার কনফার্ম করবে।</p>
+                    <input type="text" placeholder="রেফারেন্স নম্বর (যদি থাকে)" value={transactionId} onChange={(e) => setTransactionId(e.target.value)} className="w-full bg-white border border-stone-300 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#D4A017]" />
+                  </div>
+                )}
+
                 {/* COD Badge Notice */}
                 <div className="text-[11px] text-emerald-700 bg-emerald-50 p-2 rounded-lg border border-emerald-200 text-center font-medium">
-                  ✓ {COD_MESSAGE}
+                  ✓ {paymentMethod === 'cod' ? COD_MESSAGE : 'পেমেন্ট ম্যানুয়ালি যাচাই করে অর্ডার কনফার্ম করা হবে'}
                 </div>
 
                 {/* Subtotal & Total */}

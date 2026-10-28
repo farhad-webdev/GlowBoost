@@ -37,3 +37,4 @@ export interface Review {
 }
 
 export type CheckoutMode = 'whatsapp' | 'payment' | 'gateway';
+export type PaymentMethod = 'cod' | 'bkash' | 'nagad' | 'bank';

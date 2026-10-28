@@ -1,4 +1,4 @@
-import { CartItem } from '../types';
+import { CartItem, PaymentMethod } from '../types';
 import { getStoredSiteConfig } from '../services/siteStorage';
 
 export interface CheckoutDetails {
@@ -7,6 +7,15 @@ export interface CheckoutDetails {
   address: string;
   location: string;
   deliveryFee: number;
+  paymentMethod?: PaymentMethod;
+  transactionId?: string;
+}
+
+export function paymentMethodLabel(method?: PaymentMethod): string {
+  if (method === 'bkash') return 'bKash (Send Money)';
+  if (method === 'nagad') return 'Nagad (Send Money)';
+  if (method === 'bank') return 'Bank Transfer';
+  return 'Cash on Delivery (COD)';
 }
 
 export interface SingleProductOrderDetails {
@@ -52,7 +61,7 @@ export function generateWhatsAppOrderUrl(
   if (details) {
     const subtotal = items.reduce((sum, i) => sum + (i.product.priceTk ?? i.product.price ?? 0) * i.quantity, 0);
     const total = subtotal + details.deliveryFee;
-    message += `\n*গ্রাহকের তথ্য:*\n• নাম: ${details.name.trim()}\n• ফোন নম্বর: ${normalizeBdPhone(details.phone.trim())}\n• ঠিকানা: ${details.address.trim()}\n• ডেলিভারি জোন: ${details.location}\n\n*মোট পণ্যের মূল্য:* ৳${subtotal}\n*ডেলিভারি চার্জ:* ৳${details.deliveryFee}\n*সর্বমোট:* ৳${total}\n\n_${codMsg}_\n_দয়া করে আমার অর্ডারটি কনফার্ম করুন!_`;
+    message += `\n*গ্রাহকের তথ্য:*\n• নাম: ${details.name.trim()}\n• ফোন নম্বর: ${normalizeBdPhone(details.phone.trim())}\n• ঠিকানা: ${details.address.trim()}\n• ডেলিভারি জোন: ${details.location}\n• পেমেন্ট: ${paymentMethodLabel(details.paymentMethod)}${details.transactionId ? `\n• Transaction ID: ${details.transactionId.trim()}` : ''}\n\n*মোট পণ্যের মূল্য:* ৳${subtotal}\n*ডেলিভারি চার্জ:* ৳${details.deliveryFee}\n*সর্বমোট:* ৳${total}\n\n_${details.paymentMethod && details.paymentMethod !== 'cod' ? 'পেমেন্ট ম্যানুয়ালি যাচাই করে কনফার্ম করবেন' : codMsg}_\n_দয়া করে আমার অর্ডারটি কনফার্ম করুন!_`;
   } else {
     message += `\n_${codMsg}_\n_দয়া করে আমার অর্ডারটি কনফার্ম করুন!_`;
   }
