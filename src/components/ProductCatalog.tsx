@@ -342,9 +342,9 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
         )}
 
         {fullFilters ? (
-          <div className="flex flex-col lg:flex-row gap-6 items-start">
-            <button type="button" onClick={() => setShowFilters(!showFilters)} className="lg:hidden w-full py-3 rounded-xl bg-white border border-stone-200 text-sm font-bold text-stone-700 shadow-xs">
-              {showFilters ? 'ফিল্টার লুকান ✕' : '🔍 ফিল্টার দেখুন'}
+          <div className="flex flex-col lg:flex-row gap-3 lg:gap-6 items-start">
+            <button type="button" onClick={() => setShowFilters(!showFilters)} className="lg:hidden w-full py-3 rounded-full bg-gradient-to-r from-[#F5C542] via-[#D4A017] to-[#B8860B] text-[#141414] text-sm font-extrabold shadow-md active:scale-[0.98] transition-all">
+              {showFilters ? '✕ ফিল্টার বন্ধ করুন' : '🔍 ফিল্টার'}
             </button>
             <aside className={`${showFilters ? 'block' : 'hidden'} lg:block w-full lg:w-72 shrink-0 lg:sticky lg:top-28 lg:self-start lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto bg-white border border-stone-200 rounded-3xl p-5 shadow-xs space-y-6`}>
               <div className="space-y-2">
@@ -389,13 +389,13 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
               <button onClick={() => { setSelectedCategory('সবগুলো'); setSearchQuery(''); setSelectedConcern('সব'); setSortBy('latest'); setInStockOnly(false); }} className="w-full py-2.5 rounded-xl bg-stone-100 border border-stone-200 text-xs font-bold text-stone-700 hover:bg-stone-200 transition-colors">ফিল্টার রিসেট করুন</button>
             </aside>
             <div className="flex-1 min-w-0 w-full min-h-[70vh]">
-              <div className="flex flex-wrap items-center gap-3 bg-white border border-stone-200 rounded-2xl px-4 py-3 shadow-xs mb-6">
-                <span className="text-xs font-bold text-stone-500">{displayedProducts.length}টি প্রোডাক্ট</span>
-                <label className="flex items-center gap-2 text-xs font-bold text-stone-700 cursor-pointer">
+              <div className="flex flex-wrap items-center gap-3 bg-white border border-stone-200 rounded-2xl px-4 py-3 shadow-xs mb-4 lg:mb-6">
+                <span className="text-xs font-bold text-stone-500 shrink-0">{displayedProducts.length}টি প্রোডাক্ট</span>
+                <label className="hidden sm:flex items-center gap-2 text-xs font-bold text-stone-700 cursor-pointer">
                   <input type="checkbox" checked={inStockOnly} onChange={(e) => setInStockOnly(e.target.checked)} className="accent-[#D4A017] w-4 h-4" />
                   শুধু স্টকে থাকা
                 </label>
-                <SortDropdown value={sortBy} onChange={setSortBy} className="ml-auto w-48 sm:w-56" />
+                <SortDropdown value={sortBy} onChange={setSortBy} className="ml-auto w-40 sm:w-56" />
               </div>
               {productGrid}
             </div>
