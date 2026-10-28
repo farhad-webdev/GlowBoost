@@ -353,14 +353,6 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
             </button>
             <aside className={`${showFilters ? 'block' : 'hidden'} lg:block w-full lg:w-72 shrink-0 lg:sticky lg:top-28 lg:self-start lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto bg-white border border-stone-200 rounded-3xl p-5 shadow-xs space-y-6`}>
               <div className="space-y-2">
-                <h3 className="text-sm font-extrabold text-[#141414]">অনুসন্ধান</h3>
-                <div className="relative">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
-                  <input type="text" placeholder="সিরাম, সানস্ক্রিন বা কিট খুঁজুন..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full pl-11 pr-8 py-3 bg-stone-50 border border-stone-200 rounded-full text-xs text-[#222222] placeholder-stone-400 focus:outline-none focus:border-[#D4A017]" />
-                  {searchQuery && (<button type="button" onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 text-xs p-1" aria-label="অনুসন্ধান মুছে ফেলুন">✕</button>)}
-                </div>
-              </div>
-              <div className="space-y-2">
                 <h3 className="text-sm font-extrabold text-[#141414]">ক্যাটাগরি</h3>
                 <div className="space-y-1">
                   {categories.filter((cat) => cat === 'সবগুলো' || productsList.some((pr) => pr.category === cat)).map((cat) => {
