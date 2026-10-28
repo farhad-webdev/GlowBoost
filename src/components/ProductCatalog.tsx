@@ -63,6 +63,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
   }, [externalSearchQuery]);
   const [selectedConcern, setSelectedConcern] = useState<string>('সব');
   const [sortBy, setSortBy] = useState<string>('latest');
+  const [selectedPrice, setSelectedPrice] = useState<string>('all');
   const [inStockOnly, setInStockOnly] = useState<boolean>(false);
   const [addedId, setAddedId] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState<boolean>(false);
@@ -84,6 +85,14 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
     { key: 'oily', label: 'তৈলাক্ত ত্বক' },
     { key: 'acne', label: 'ব্রণপ্রবণ' },
     { key: 'sun', label: 'সান প্রোটেকশন' },
+  ];
+  const priceRanges = [
+    { key: 'all', label: 'সব দাম', min: 0, max: Infinity },
+    { key: 'under500', label: '৳৫০০ এর নিচে', min: 0, max: 499 },
+    { key: '500-1000', label: '৳৫০০ - ৳১,০০০', min: 500, max: 1000 },
+    { key: '1000-1500', label: '৳১,০০০ - ৳১,৫০০', min: 1000, max: 1500 },
+    { key: '1500-2000', label: '৳১,৫০০ - ৳২,০০০', min: 1500, max: 2000 },
+    { key: 'over2000', label: '৳২,০০০ এর উপরে', min: 2000, max: Infinity },
   ];
   const getConcerns = (product: Product): string[] => {
     if (product.skinConcerns && product.skinConcerns.length > 0) return product.skinConcerns;
@@ -114,7 +123,10 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           product.benefit.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesConcern = selectedConcern === 'সব' || getConcerns(product).includes(selectedConcern);
-    return matchesCategory && matchesSearch && matchesConcern;
+    const pr = priceRanges.find((r) => r.key === selectedPrice) || priceRanges[0];
+    const pv = product.priceTk ?? product.price ?? 0;
+    const matchesPrice = pv === 0 ? selectedPrice === 'all' : pv >= pr.min && pv <= pr.max;
+    return matchesCategory && matchesSearch && matchesConcern && matchesPrice;
   });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
@@ -161,6 +173,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
                 setSelectedConcern('সব');
                 setSortBy('latest');
                 setInStockOnly(false);
+                setSelectedPrice('all');
               }}
               className="mt-4 px-6 py-2.5 rounded-full bg-[#D4A017] text-white text-xs sm:text-sm font-bold hover:bg-[#B8860B] transition-colors cursor-pointer"
             >
@@ -379,6 +392,15 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
                 </div>
               </div>
               <div className="space-y-2">
+                <h3 className="text-sm font-extrabold text-[#141414]">দাম</h3>
+                <div className="space-y-1">
+                  {priceRanges.map((r) => {
+                    const isActive = selectedPrice === r.key;
+                    return (<button key={r.key} onClick={() => setSelectedPrice(r.key)} className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${isActive ? 'bg-[#141414] text-white shadow-md' : 'bg-stone-50 text-stone-700 border border-stone-200 hover:border-[#D4A017]'}`}>{r.label}</button>);
+                  })}
+                </div>
+              </div>
+              <div className="space-y-2">
                 <h3 className="text-sm font-extrabold text-[#141414]">সাজান</h3>
                 <SortDropdown value={sortBy} onChange={setSortBy} className="w-full" dropUp />
               </div>
@@ -386,7 +408,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
                 <input type="checkbox" checked={inStockOnly} onChange={(e) => setInStockOnly(e.target.checked)} className="accent-[#D4A017] w-4 h-4" />
                 শুধু স্টকে থাকা
               </label>
-              <button onClick={() => { setSelectedCategory('সবগুলো'); setSearchQuery(''); setSelectedConcern('সব'); setSortBy('latest'); setInStockOnly(false); }} className="w-full py-2.5 rounded-xl bg-stone-100 border border-stone-200 text-xs font-bold text-stone-700 hover:bg-stone-200 transition-colors">ফিল্টার রিসেট করুন</button>
+              <button onClick={() => { setSelectedCategory('সবগুলো'); setSearchQuery(''); setSelectedConcern('সব'); setSortBy('latest'); setInStockOnly(false); setSelectedPrice('all'); }} className="w-full py-2.5 rounded-xl bg-stone-100 border border-stone-200 text-xs font-bold text-stone-700 hover:bg-stone-200 transition-colors">ফিল্টার রিসেট করুন</button>
             </aside>
             <div className="flex-1 min-w-0 w-full min-h-[70vh]">
               <div className="flex flex-wrap items-center gap-3 bg-white border border-stone-200 rounded-2xl px-4 py-3 shadow-xs mb-4 lg:mb-6">
