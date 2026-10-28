@@ -1,5 +1,27 @@
 [
   {
+    "id": "fb-revive-serum-20261028",
+    "name": "Beauty of Joseon Revive Serum: Ginseng + Snail Mucin 30ml",
+    "category": "স্কিন কেয়ার",
+    "priceTk": 1350,
+    "originalPrice": null,
+    "rating": 5,
+    "reviewsCount": 1,
+    "image": "https://drive.google.com/thumbnail?id=1NjT6YRbyXg2_PVHoAnTkDMvQd49hRygz&sz=w1000",
+    "badge": "স্কিন কেয়ার",
+    "benefit": "Beauty of Joseon Revive Serum: Ginseng + Snail Mucin 30ml — ৬৩% জিনসেং রুট ওয়াটার + ৩% স্নেইল মিউসিন সমৃদ্ধ রিভাইভিং সিরাম। ক্লান্ত, নিস্তেজ ত্বকে প্রাণ ফিরিয়ে আনে, ইলাস্টিসিটি বাড়াতে সাহায্য করে ও গভীর হাইড্রেশন দেয় — সেনসিটিভ ত্বকের জন্যও জেন্টল, প্রতিদিনের ব্যবহারের জন্য।",
+    "benefits": [
+      "৬৩% জিনসেং রুট ওয়াটার — ত্বককে রিভাইভ ও উজ্জ্বল করতে সাহায্য করে",
+      "৩% স্নেইল মিউসিন — ইলাস্টিসিটি ও স্কিন রিপেয়ারে সাহায্য করে",
+      "গভীর হাইড্রেশন দেয়, ত্বক থাকে নরম ও মসৃণ",
+      "হালকা, নন-স্টিকি টেক্সচার — সকালে ও রাতে ব্যবহারের জন্য"
+    ],
+    "ingredients": "জিনসেং রুট ওয়াটার ও স্নেইল সিক্রেশন ফিলট্রেট সমৃদ্ধ ফর্মুলা — সম্পূর্ণ উপাদান তালিকা পণ্যের প্যাকেজিংয়ে দেওয়া আছে।",
+    "howToUse": "মুখ ধোয়ার পর ২-৩ ড্রপ নিয়ে মুখে ও ঘাড়ে আলতো করে লাগান, সকালে ও রাতে।",
+    "inStock": true,
+    "facebookPostUrl": "https://www.facebook.com/GlowBoostBD/posts/pfbid0bzSQL7nkT69GPTPC6t63MfYQXGVEDwBDuQssybAGTirigxY5RCpzVEMEn5xEcwTpl"
+  },
+  {
     "id": "fb-anua-heartleaf-20261027",
     "name": "Anua Heartleaf 77% Soothing Toner 250ml",
     "category": "স্কিন কেয়ার",
