@@ -101,7 +101,7 @@ export const Hero: React.FC<HeroProps> = ({ onSelectProduct, onAddToCart }) => {
   const priceVal = currentProduct ? (currentProduct.priceTk ?? currentProduct.price ?? 0) : 0;
 
   return (
-    <section className="relative bg-[#FAF7F0] overflow-hidden py-14 sm:py-20 lg:py-24 border-b border-stone-200">
+    <section className="relative bg-[#FAF7F0] overflow-hidden pt-14 pb-6 sm:py-20 lg:py-24 border-b border-stone-200">
       {/* Background ambient gold lights */}
       <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[350px] bg-[#D4A017]/10 blur-[130px] rounded-full pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-[400px] h-[250px] bg-[#F5C542]/10 blur-[120px] rounded-full pointer-events-none" />
