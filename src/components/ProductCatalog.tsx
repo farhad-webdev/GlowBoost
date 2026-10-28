@@ -355,8 +355,19 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
               <button onClick={() => { setSelectedCategory('সবগুলো'); setSearchQuery(''); setSelectedConcern('সব'); setSortBy('latest'); setInStockOnly(false); }} className="w-full py-2.5 rounded-xl bg-stone-100 border border-stone-200 text-xs font-bold text-stone-700 hover:bg-stone-200 transition-colors">ফিল্টার রিসেট করুন</button>
             </aside>
             <div className="flex-1 min-w-0 w-full">
-              <div className="flex items-center gap-3 bg-white border border-stone-200 rounded-2xl px-4 py-3 shadow-xs mb-6">
+              <div className="flex flex-wrap items-center gap-3 bg-white border border-stone-200 rounded-2xl px-4 py-3 shadow-xs mb-6">
                 <span className="text-xs font-bold text-stone-500">{displayedProducts.length}টি প্রোডাক্ট</span>
+                <label className="flex items-center gap-2 text-xs font-bold text-stone-700 cursor-pointer">
+                  <input type="checkbox" checked={inStockOnly} onChange={(e) => setInStockOnly(e.target.checked)} className="accent-[#D4A017] w-4 h-4" />
+                  শুধু স্টকে থাকা
+                </label>
+                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="ml-auto px-3 py-2 bg-stone-50 border border-stone-200 rounded-full text-xs font-bold text-stone-700 focus:outline-none focus:border-[#D4A017] cursor-pointer">
+                  <option value="latest">সাজান: লেটেস্ট</option>
+                  <option value="priceAsc">দাম: কম থেকে বেশি</option>
+                  <option value="priceDesc">দাম: বেশি থেকে কম</option>
+                  <option value="rating">রেটিং: বেশি থেকে কম</option>
+                  <option value="name">নাম: A থেকে Z</option>
+                </select>
               </div>
               {productGrid}
             </div>
