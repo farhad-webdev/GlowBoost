@@ -134,18 +134,18 @@ export default function App() {
           externalSearchQuery={headerSearch}
         />
       ) : (
-        <>
+        <div className="flex flex-col">
       {/* 2. Hero Section */}
-      <Hero
+      <div className="order-1"><Hero
         onSelectProduct={handleSelectProduct}
         onAddToCart={(product) => handleAddToCart(product, 1)}
-      />
+      /></div>
 
-      {/* 3. Why GlowBoost (Why Us) */}
-      <WhyUs />
+      {/* 3. Why GlowBoost (Why Us) - mobile: below Latest Products, desktop: after Hero */}
+      <div className="order-3 lg:order-2"><WhyUs /></div>
 
-      {/* 4. Latest Products (Home: latest 12 only) */}
-      <ProductCatalog
+      {/* 4. Latest Products (Home: latest 12 only) - mobile: right after Hero, desktop: after Why Us */}
+      <div className="order-2 lg:order-3"><ProductCatalog
         onAddToCart={(product) => handleAddToCart(product, 1)}
         onSelectProduct={handleSelectProduct}
         limit={12}
@@ -153,18 +153,18 @@ export default function App() {
         onViewAll={() => goToPage('shop')}
         heading="লেটেস্ট প্রোডাক্টস"
         externalSearchQuery={headerSearch}
-      />
+      /></div>
 
       {/* 5. How to Order */}
-      <HowToOrder />
+      <div className="order-4"><HowToOrder /></div>
 
       {/* 6. Customer Reviews */}
-      <Testimonials />
+      <div className="order-4"><Testimonials /></div>
 
       {/* 7. FAQ */}
-      <Faq />
+      <div className="order-5"><Faq /></div>
 
-        </>
+        </div>
       )}
 
       {/* 8. Footer */}
