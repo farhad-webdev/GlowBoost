@@ -333,7 +333,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
         
         {/* Section Header - hidden on Shop page, filters start directly */}
         {!fullFilters && (
-        <div className="text-left sm:text-center max-w-2xl sm:mx-auto mb-12 space-y-4">
+        <div className="hidden sm:block text-left sm:text-center max-w-2xl sm:mx-auto mb-12 space-y-4">
           <span className="text-xs font-bold tracking-widest uppercase text-[#D4A017]">
             অথেনটিক গ্লো কালেকশন · সারা বাংলাদেশে ক্যাশ অন ডেলিভারি
           </span>
