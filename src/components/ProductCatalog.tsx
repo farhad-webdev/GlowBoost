@@ -408,6 +408,11 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
                   <input type="checkbox" checked={inStockOnly} onChange={(e) => setInStockOnly(e.target.checked)} className="accent-[#D4A017] w-4 h-4" />
                   শুধু স্টকে থাকা
                 </label>
+                <div className="hidden lg:block flex-1 min-w-[180px] relative">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+                  <input type="text" placeholder="সিরাম, সানস্ক্রিন বা কিট খুঁজুন..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full pl-11 pr-8 py-2.5 bg-stone-50 border border-stone-200 rounded-full text-xs text-[#222222] placeholder-stone-400 focus:outline-none focus:border-[#D4A017]" />
+                  {searchQuery && (<button type="button" onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 text-xs p-1" aria-label="অনুসন্ধান মুছে ফেলুন">✕</button>)}
+                </div>
                 <SortDropdown value={sortBy} onChange={setSortBy} className="ml-auto w-40 sm:w-56" />
               </div>
               {productGrid}
