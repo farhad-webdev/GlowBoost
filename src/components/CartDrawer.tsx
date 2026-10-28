@@ -266,30 +266,37 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
                   </div>
                 </div>
 
-                {/* Payment Method selector — manual payment, verified by GlowBoost */}
+                {/* Payment Method selector — brand logo-style buttons, manual payment */}
                 <div className="space-y-1">
                   <label className="text-[10px] font-bold text-stone-600">পেমেন্ট মেথড নির্বাচন করুন</label>
                   <div className="grid grid-cols-2 gap-2">
                     {([
-                      ['cod', 'Cash on Delivery'],
-                      ['bkash', 'bKash'],
-                      ['nagad', 'Nagad'],
-                      ['bank', 'Bank Transfer'],
-                    ] as [PaymentMethod, string][]).map(([method, label]) => (
-                      <button
-                        key={method}
-                        type="button"
-                        onClick={() => setPaymentMethod(method)}
-                        className={`py-2 px-3 rounded-xl text-xs font-semibold border transition-all ${
-                          paymentMethod === method
-                            ? 'bg-[#D4A017]/10 border-[#D4A017] text-[#D4A017]'
-                            : 'bg-white border-stone-300 text-stone-700'
-                        }`}
-                      >
-                        {label}
-                      </button>
-                    ))}
+                      ['cod', 'Cash on Delivery', '#047857', '💵'],
+                      ['bkash', 'bKash', '#E2136E', ''],
+                      ['nagad', 'Nagad', '#F6921E', ''],
+                      ['bank', 'Bank Transfer', '#1D4ED8', '🏦'],
+                    ] as [PaymentMethod, string, string, string][]).map(([method, label, brandColor, icon]) => {
+                      const selected = paymentMethod === method;
+                      return (
+                        <button
+                          key={method}
+                          type="button"
+                          onClick={() => setPaymentMethod(method)}
+                          aria-label={label}
+                          className="py-2.5 px-3 rounded-xl text-sm font-extrabold border-2 transition-all flex items-center justify-center gap-1.5"
+                          style={{
+                            backgroundColor: selected ? brandColor : '#ffffff',
+                            borderColor: brandColor,
+                            color: selected ? '#ffffff' : brandColor,
+                          }}
+                        >
+                          {icon ? <span aria-hidden="true">{icon}</span> : null}
+                          {label}
+                        </button>
+                      );
+                    })}
                   </div>
+                  <p className="text-[10px] text-stone-500 text-center">bKash / Nagad / Bank — GlowBoost ম্যানুয়ালি যাচাই করে অর্ডার কনফার্ম করবে</p>
                 </div>
 
                 {paymentMethod === 'bkash' && (
