@@ -110,7 +110,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
     <>
         {/* Product Grid - 2 columns on mobile, 2 on sm, 3 on md, 4 on lg */}
         {displayedProducts.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-3xl border border-stone-200 p-8 shadow-xs">
+          <div className="text-center py-16 bg-white rounded-3xl border border-stone-200 p-8 shadow-xs min-h-[60vh] flex flex-col items-center justify-center">
             <p className="text-base sm:text-lg font-medium text-stone-600">
               আপনার অনুসন্ধানের সাথে মিল রেখে কোনো প্রোডাক্ট পাওয়া যায়নি।
             </p>
@@ -306,7 +306,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
             <button type="button" onClick={() => setShowFilters(!showFilters)} className="lg:hidden w-full py-3 rounded-xl bg-white border border-stone-200 text-sm font-bold text-stone-700 shadow-xs">
               {showFilters ? 'ফিল্টার লুকান ✕' : '🔍 ফিল্টার দেখুন'}
             </button>
-            <aside className={`${showFilters ? 'block' : 'hidden'} lg:block w-full lg:w-72 shrink-0 lg:sticky lg:top-28 bg-white border border-stone-200 rounded-3xl p-5 shadow-xs space-y-6`}>
+            <aside className={`${showFilters ? 'block' : 'hidden'} lg:block w-full lg:w-72 shrink-0 lg:sticky lg:top-28 lg:self-start lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto bg-white border border-stone-200 rounded-3xl p-5 shadow-xs space-y-6`}>
               <div className="space-y-2">
                 <h3 className="text-sm font-extrabold text-[#141414]">অনুসন্ধান</h3>
                 <div className="relative">
@@ -318,7 +318,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
               <div className="space-y-2">
                 <h3 className="text-sm font-extrabold text-[#141414]">ক্যাটাগরি</h3>
                 <div className="space-y-1">
-                  {categories.map((cat) => {
+                  {categories.filter((cat) => cat === 'সবগুলো' || productsList.some((pr) => pr.category === cat)).map((cat) => {
                     const count = cat === 'সবগুলো' ? productsList.length : productsList.filter((pr) => pr.category === cat).length;
                     const isActive = selectedCategory === cat;
                     return (
@@ -354,7 +354,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
               </label>
               <button onClick={() => { setSelectedCategory('সবগুলো'); setSearchQuery(''); setSelectedConcern('সব'); setSortBy('latest'); setInStockOnly(false); }} className="w-full py-2.5 rounded-xl bg-stone-100 border border-stone-200 text-xs font-bold text-stone-700 hover:bg-stone-200 transition-colors">ফিল্টার রিসেট করুন</button>
             </aside>
-            <div className="flex-1 min-w-0 w-full">
+            <div className="flex-1 min-w-0 w-full min-h-[70vh]">
               <div className="flex flex-wrap items-center gap-3 bg-white border border-stone-200 rounded-2xl px-4 py-3 shadow-xs mb-6">
                 <span className="text-xs font-bold text-stone-500">{displayedProducts.length}টি প্রোডাক্ট</span>
                 <label className="flex items-center gap-2 text-xs font-bold text-stone-700 cursor-pointer">
