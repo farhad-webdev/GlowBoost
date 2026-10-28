@@ -328,7 +328,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
   );
 
   return (
-    <section id="products" className={fullFilters ? "py-12 pt-20 sm:pt-24 scroll-mt-28 bg-[#FAF7F0] text-[#222222]" : "py-20 pt-24 sm:pt-28 scroll-mt-28 bg-[#FAF7F0] text-[#222222]"}>
+    <section id="products" className={fullFilters ? "py-12 pt-20 sm:pt-24 scroll-mt-28 bg-[#FAF7F0] text-[#222222]" : "py-12 pt-6 sm:py-20 sm:pt-24 scroll-mt-28 bg-[#FAF7F0] text-[#222222]"}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header - hidden on Shop page, filters start directly */}
