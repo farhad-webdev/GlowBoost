@@ -344,7 +344,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
         {fullFilters ? (
           <div className="flex flex-col lg:flex-row gap-3 lg:gap-6 items-start">
             <button type="button" onClick={() => setShowFilters(!showFilters)} className="lg:hidden w-full py-3 rounded-full bg-gradient-to-r from-[#F5C542] via-[#D4A017] to-[#B8860B] text-[#141414] text-sm font-extrabold shadow-md active:scale-[0.98] transition-all">
-              {showFilters ? '✕ ফিল্টার বন্ধ করুন' : '🔍 ফিল্টার'}
+              {showFilters ? 'ফিল্টার বন্ধ করুন' : 'ফিল্টার'}
             </button>
             <aside className={`${showFilters ? 'block' : 'hidden'} lg:block w-full lg:w-72 shrink-0 lg:sticky lg:top-28 lg:self-start lg:max-h-[calc(100vh-120px)] lg:overflow-y-auto bg-white border border-stone-200 rounded-3xl p-5 shadow-xs space-y-6`}>
               <div className="space-y-2">
