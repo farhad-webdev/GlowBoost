@@ -25,6 +25,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
   const [sortBy, setSortBy] = useState<string>('latest');
   const [inStockOnly, setInStockOnly] = useState<boolean>(false);
   const [addedId, setAddedId] = useState<string | null>(null);
+  const [showFilters, setShowFilters] = useState<boolean>(false);
 
   // Sync products list when admin updates products
   useEffect(() => {
@@ -32,7 +33,8 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
       setProductsList(getStoredProducts());
     };
     window.addEventListener('glowboost_products_updated', handleSync);
-    return () => window.removeEventListener('glowboost_products_updated', handleSync);
+
+  return () => window.removeEventListener('glowboost_products_updated', handleSync);
   }, []);
 
 
@@ -104,110 +106,8 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
     onSelectProduct(product, 'order');
   };
 
-  return (
-    <section id="products" className="py-20 pt-24 sm:pt-28 scroll-mt-28 bg-[#FAF7F0] text-[#222222]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header - hidden on Shop page, filters start directly */}
-        {!fullFilters && (
-        <div className="text-left sm:text-center max-w-2xl sm:mx-auto mb-12 space-y-4">
-          <span className="text-xs font-bold tracking-widest uppercase text-[#D4A017]">
-            অথেনটিক গ্লো কালেকশন · সারা বাংলাদেশে ক্যাশ অন ডেলিভারি
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-bold font-['Playfair_Display','Noto_Serif_Bengali',serif]">
-            {heading || 'বেস্ট সেলার ও সকল বিউটি প্রোডাক্টস'}
-          </h2>
-          <p className="text-stone-600 text-sm sm:text-base">
-            আমাদের প্রতিটি পণ্য ১০০% অরিজিনাল। সরাসরি দ্রুত কিনতে "হোয়াটসঅ্যাপে অর্ডার"<br className="hidden md:block" /> বাটনে ক্লিক করুন অথবা কার্টে যোগ করুন।
-          </p>
-        </div>
-        )}
-
-        {/* Filter & Search Bar - Professional stacked layout */}
-        <div className="mb-8 space-y-4">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            {/* Category Filter Pills */}
-            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth py-1">
-              {categories.map((cat) => {
-                const isActive = selectedCategory === cat;
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold rounded-full transition-all whitespace-nowrap shrink-0 cursor-pointer ${
-                      isActive
-                        ? 'bg-gradient-to-r from-[#F5C542] via-[#D4A017] to-[#B8860B] text-[#141414] font-bold shadow-md shadow-[#D4A017]/25'
-                        : 'bg-white text-stone-700 border border-stone-200 hover:border-[#D4A017] hover:text-[#141414] shadow-xs active:bg-stone-50'
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Search Box */}
-            <div className="relative w-full lg:w-80 shrink-0">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
-              <input
-                type="text"
-                placeholder="সিরাম, সানস্ক্রিন বা কিট খুঁজুন..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-10 py-3 bg-white border border-stone-300 rounded-full text-xs sm:text-sm text-[#222222] placeholder-stone-400 focus:outline-none focus:border-[#D4A017] transition-colors shadow-xs"
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 text-xs p-1"
-                  aria-label="অনুসন্ধান মুছে ফেলুন"
-                >
-                  ✕
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* Skin Concern Filter - clean second row */}
-          <div className="flex flex-wrap items-center gap-2 bg-white border border-stone-200 rounded-2xl px-4 py-3 shadow-xs">
-            <span className="text-xs font-bold text-stone-500 whitespace-nowrap">ত্বকের ধরন:</span>
-            {concernOptions.map((c) => {
-              const isActive = selectedConcern === c.key;
-              return (
-                <button
-                  key={c.key}
-                  onClick={() => setSelectedConcern(c.key)}
-                  className={`px-4 py-2 text-xs font-semibold rounded-full transition-all whitespace-nowrap cursor-pointer ${
-                    isActive
-                      ? 'bg-[#141414] text-white shadow-md'
-                      : 'bg-stone-50 text-stone-700 border border-stone-200 hover:border-[#D4A017] hover:text-[#141414]'
-                  }`}
-                >
-                  {c.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {fullFilters && (
-          <div className="flex flex-wrap items-center gap-3 bg-white border border-stone-200 rounded-2xl px-4 py-3 shadow-xs mb-8">
-            <span className="text-xs font-bold text-stone-500">{displayedProducts.length}টি প্রোডাক্ট</span>
-            <label className="flex items-center gap-2 text-xs font-semibold text-stone-700 cursor-pointer">
-              <input type="checkbox" checked={inStockOnly} onChange={(e) => setInStockOnly(e.target.checked)} className="accent-[#D4A017] w-4 h-4" />
-              শুধু স্টকে থাকা
-            </label>
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="ml-auto px-3 py-2 bg-stone-50 border border-stone-200 rounded-full text-xs font-semibold text-stone-700 focus:outline-none focus:border-[#D4A017] cursor-pointer">
-              <option value="latest">সাজান: লেটেস্ট</option>
-              <option value="priceAsc">দাম: কম থেকে বেশি</option>
-              <option value="priceDesc">দাম: বেশি থেকে কম</option>
-              <option value="rating">রেটিং: বেশি থেকে কম</option>
-              <option value="name">নাম: A থেকে Z</option>
-            </select>
-          </div>
-        )}
-
+  const productGrid = (
+    <>
         {/* Product Grid - 2 columns on mobile, 2 on sm, 3 on md, 4 on lg */}
         {displayedProducts.length === 0 ? (
           <div className="text-center py-16 bg-white rounded-3xl border border-stone-200 p-8 shadow-xs">
@@ -228,7 +128,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-6">
+          <div className={`grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 ${fullFilters ? "lg:grid-cols-3" : "lg:grid-cols-4"} gap-2.5 sm:gap-4 lg:gap-6`}>
             {displayedProducts.map((product) => {
               const priceVal = product.priceTk ?? product.price ?? 0;
               return (
@@ -378,6 +278,161 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
               );
             })}
           </div>
+        )}
+    </>
+  );
+
+  return (
+    <section id="products" className="py-20 pt-24 sm:pt-28 scroll-mt-28 bg-[#FAF7F0] text-[#222222]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Section Header - hidden on Shop page, filters start directly */}
+        {!fullFilters && (
+        <div className="text-left sm:text-center max-w-2xl sm:mx-auto mb-12 space-y-4">
+          <span className="text-xs font-bold tracking-widest uppercase text-[#D4A017]">
+            অথেনটিক গ্লো কালেকশন · সারা বাংলাদেশে ক্যাশ অন ডেলিভারি
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-bold font-['Playfair_Display','Noto_Serif_Bengali',serif]">
+            {heading || 'বেস্ট সেলার ও সকল বিউটি প্রোডাক্টস'}
+          </h2>
+          <p className="text-stone-600 text-sm sm:text-base">
+            আমাদের প্রতিটি পণ্য ১০০% অরিজিনাল। সরাসরি দ্রুত কিনতে "হোয়াটসঅ্যাপে অর্ডার"<br className="hidden md:block" /> বাটনে ক্লিক করুন অথবা কার্টে যোগ করুন।
+          </p>
+        </div>
+        )}
+
+        {fullFilters ? (
+          <div className="flex flex-col lg:flex-row gap-6 items-start">
+            <button type="button" onClick={() => setShowFilters(!showFilters)} className="lg:hidden w-full py-3 rounded-xl bg-white border border-stone-200 text-sm font-bold text-stone-700 shadow-xs">
+              {showFilters ? 'ফিল্টার লুকান ✕' : '🔍 ফিল্টার দেখুন'}
+            </button>
+            <aside className={`${showFilters ? 'block' : 'hidden'} lg:block w-full lg:w-72 shrink-0 lg:sticky lg:top-28 bg-white border border-stone-200 rounded-3xl p-5 shadow-xs space-y-6`}>
+              <div className="space-y-2">
+                <h3 className="text-sm font-extrabold text-[#141414]">অনুসন্ধান</h3>
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+                  <input type="text" placeholder="সিরাম, সানস্ক্রিন বা কিট খুঁজুন..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full pl-11 pr-8 py-3 bg-stone-50 border border-stone-200 rounded-full text-xs text-[#222222] placeholder-stone-400 focus:outline-none focus:border-[#D4A017]" />
+                  {searchQuery && (<button type="button" onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 text-xs p-1" aria-label="অনুসন্ধান মুছে ফেলুন">✕</button>)}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-sm font-extrabold text-[#141414]">ক্যাটাগরি</h3>
+                <div className="space-y-1">
+                  {categories.map((cat) => {
+                    const count = cat === 'সবগুলো' ? productsList.length : productsList.filter((pr) => pr.category === cat).length;
+                    const isActive = selectedCategory === cat;
+                    return (
+                      <button key={cat} onClick={() => setSelectedCategory(cat)} className={`w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${isActive ? 'bg-gradient-to-r from-[#F5C542] via-[#D4A017] to-[#B8860B] text-[#141414] shadow-md' : 'bg-stone-50 text-stone-700 border border-stone-200 hover:border-[#D4A017]'}`}>
+                        <span>{cat}</span><span className="text-[10px] opacity-70">{count}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-sm font-extrabold text-[#141414]">ত্বকের ধরন</h3>
+                <div className="space-y-1">
+                  {concernOptions.map((c) => {
+                    const isActive = selectedConcern === c.key;
+                    return (<button key={c.key} onClick={() => setSelectedConcern(c.key)} className={`w-full text-left px-4 py-2.5 rounded-xl text-xs font-bold transition-all ${isActive ? 'bg-[#141414] text-white shadow-md' : 'bg-stone-50 text-stone-700 border border-stone-200 hover:border-[#D4A017]'}`}>{c.label}</button>);
+                  })}
+                </div>
+              </div>
+              <div className="space-y-2">
+                <h3 className="text-sm font-extrabold text-[#141414]">সাজান</h3>
+                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-700 focus:outline-none focus:border-[#D4A017] cursor-pointer">
+                  <option value="latest">সাজান: লেটেস্ট</option>
+                  <option value="priceAsc">দাম: কম থেকে বেশি</option>
+                  <option value="priceDesc">দাম: বেশি থেকে কম</option>
+                  <option value="rating">রেটিং: বেশি থেকে কম</option>
+                  <option value="name">নাম: A থেকে Z</option>
+                </select>
+              </div>
+              <label className="flex items-center gap-2 text-xs font-bold text-stone-700 cursor-pointer">
+                <input type="checkbox" checked={inStockOnly} onChange={(e) => setInStockOnly(e.target.checked)} className="accent-[#D4A017] w-4 h-4" />
+                শুধু স্টকে থাকা
+              </label>
+              <button onClick={() => { setSelectedCategory('সবগুলো'); setSearchQuery(''); setSelectedConcern('সব'); setSortBy('latest'); setInStockOnly(false); }} className="w-full py-2.5 rounded-xl bg-stone-100 border border-stone-200 text-xs font-bold text-stone-700 hover:bg-stone-200 transition-colors">ফিল্টার রিসেট করুন</button>
+            </aside>
+            <div className="flex-1 min-w-0 w-full">
+              <div className="flex items-center gap-3 bg-white border border-stone-200 rounded-2xl px-4 py-3 shadow-xs mb-6">
+                <span className="text-xs font-bold text-stone-500">{displayedProducts.length}টি প্রোডাক্ট</span>
+              </div>
+              {productGrid}
+            </div>
+          </div>
+        ) : (
+          <>
+        {/* Filter & Search Bar - Professional stacked layout */}
+        <div className="mb-8 space-y-4">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            {/* Category Filter Pills */}
+            <div className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth py-1">
+              {categories.map((cat) => {
+                const isActive = selectedCategory === cat;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold rounded-full transition-all whitespace-nowrap shrink-0 cursor-pointer ${
+                      isActive
+                        ? 'bg-gradient-to-r from-[#F5C542] via-[#D4A017] to-[#B8860B] text-[#141414] font-bold shadow-md shadow-[#D4A017]/25'
+                        : 'bg-white text-stone-700 border border-stone-200 hover:border-[#D4A017] hover:text-[#141414] shadow-xs active:bg-stone-50'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Search Box */}
+            <div className="relative w-full lg:w-80 shrink-0">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+              <input
+                type="text"
+                placeholder="সিরাম, সানস্ক্রিন বা কিট খুঁজুন..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-11 pr-10 py-3 bg-white border border-stone-300 rounded-full text-xs sm:text-sm text-[#222222] placeholder-stone-400 focus:outline-none focus:border-[#D4A017] transition-colors shadow-xs"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 text-xs p-1"
+                  aria-label="অনুসন্ধান মুছে ফেলুন"
+                >
+                  ✕
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Skin Concern Filter - clean second row */}
+          <div className="flex flex-wrap items-center gap-2 bg-white border border-stone-200 rounded-2xl px-4 py-3 shadow-xs">
+            <span className="text-xs font-bold text-stone-500 whitespace-nowrap">ত্বকের ধরন:</span>
+            {concernOptions.map((c) => {
+              const isActive = selectedConcern === c.key;
+              return (
+                <button
+                  key={c.key}
+                  onClick={() => setSelectedConcern(c.key)}
+                  className={`px-4 py-2 text-xs font-semibold rounded-full transition-all whitespace-nowrap cursor-pointer ${
+                    isActive
+                      ? 'bg-[#141414] text-white shadow-md'
+                      : 'bg-stone-50 text-stone-700 border border-stone-200 hover:border-[#D4A017] hover:text-[#141414]'
+                  }`}
+                >
+                  {c.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+            {productGrid}
+          </>
         )}
 
         {showViewAllButton && (
