@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Product } from '../types';
 import { getStoredProducts } from '../services/siteStorage';
 import { Star, ShoppingBag, Eye, Search, CheckCircle2, MessageCircle } from 'lucide-react';
@@ -13,6 +13,46 @@ interface ProductCatalogProps {
   heading?: string;
   externalSearchQuery?: string;
 }
+
+
+const SORT_OPTIONS = [
+  { value: 'latest', label: 'সাজান: লেটেস্ট' },
+  { value: 'priceAsc', label: 'দাম: কম থেকে বেশি' },
+  { value: 'priceDesc', label: 'দাম: বেশি থেকে কম' },
+  { value: 'rating', label: 'রেটিং: বেশি থেকে কম' },
+  { value: 'name', label: 'নাম: A থেকে Z' },
+];
+const SortDropdown: React.FC<{ value: string; onChange: (v: string) => void; className?: string; dropUp?: boolean }> = ({ value, onChange, className, dropUp }) => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const close = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false); };
+    document.addEventListener('mousedown', close);
+    return () => document.removeEventListener('mousedown', close);
+  }, []);
+  const selected = SORT_OPTIONS.find((o) => o.value === value) || SORT_OPTIONS[0];
+  return (
+    <div ref={ref} className={`relative ${className || ''}`}>
+      <button type="button" onClick={() => setOpen(!open)} className="w-full flex items-center justify-between gap-2 px-4 py-3 bg-white border border-stone-200 rounded-xl text-xs font-bold text-stone-700 hover:border-[#D4A017] hover:shadow-xs transition-all cursor-pointer">
+        <span>{selected.label}</span>
+        <span className={`text-[#D4A017] text-sm leading-none transition-transform ${open ? 'rotate-180' : ''}`}>▾</span>
+      </button>
+      {open && (
+        <div className={`absolute left-0 right-0 ${dropUp ? "bottom-full mb-2" : "top-full mt-2"} bg-white border border-stone-200 rounded-2xl shadow-xl shadow-stone-900/10 overflow-hidden z-50 py-1.5`}>
+          {SORT_OPTIONS.map((o) => {
+            const active = o.value === value;
+            return (
+              <button key={o.value} type="button" onClick={() => { onChange(o.value); setOpen(false); }} className={`w-full flex items-center justify-between px-4 py-2.5 text-xs font-bold text-left transition-colors cursor-pointer ${active ? 'bg-[#141414] text-white' : 'text-stone-700 hover:bg-[#FAF7F0] hover:text-[#141414]'}`}>
+                <span>{o.label}</span>
+                {active && <span className="text-[#F5C542]">✓</span>}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+};
 
 export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onSelectProduct, limit, showViewAllButton, onViewAll, fullFilters, heading, externalSearchQuery }) => {
   const [productsList, setProductsList] = useState<Product[]>(getStoredProducts());
@@ -340,13 +380,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
               </div>
               <div className="space-y-2">
                 <h3 className="text-sm font-extrabold text-[#141414]">সাজান</h3>
-                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="w-full px-4 py-3 bg-stone-50 border border-stone-200 rounded-xl text-xs font-bold text-stone-700 focus:outline-none focus:border-[#D4A017] cursor-pointer">
-                  <option value="latest">সাজান: লেটেস্ট</option>
-                  <option value="priceAsc">দাম: কম থেকে বেশি</option>
-                  <option value="priceDesc">দাম: বেশি থেকে কম</option>
-                  <option value="rating">রেটিং: বেশি থেকে কম</option>
-                  <option value="name">নাম: A থেকে Z</option>
-                </select>
+                <SortDropdown value={sortBy} onChange={setSortBy} className="w-full" dropUp />
               </div>
               <label className="flex items-center gap-2 text-xs font-bold text-stone-700 cursor-pointer">
                 <input type="checkbox" checked={inStockOnly} onChange={(e) => setInStockOnly(e.target.checked)} className="accent-[#D4A017] w-4 h-4" />
@@ -361,13 +395,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({ onAddToCart, onS
                   <input type="checkbox" checked={inStockOnly} onChange={(e) => setInStockOnly(e.target.checked)} className="accent-[#D4A017] w-4 h-4" />
                   শুধু স্টকে থাকা
                 </label>
-                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="ml-auto px-3 py-2 bg-stone-50 border border-stone-200 rounded-full text-xs font-bold text-stone-700 focus:outline-none focus:border-[#D4A017] cursor-pointer">
-                  <option value="latest">সাজান: লেটেস্ট</option>
-                  <option value="priceAsc">দাম: কম থেকে বেশি</option>
-                  <option value="priceDesc">দাম: বেশি থেকে কম</option>
-                  <option value="rating">রেটিং: বেশি থেকে কম</option>
-                  <option value="name">নাম: A থেকে Z</option>
-                </select>
+                <SortDropdown value={sortBy} onChange={setSortBy} className="ml-auto w-48 sm:w-56" />
               </div>
               {productGrid}
             </div>
