@@ -1,5 +1,45 @@
 [
   {
+    "id": "fb-round-lab-1025-dokdo-toner-20261109",
+    "name": "Round Lab 1025 Dokdo Toner",
+    "category": "স্কিন কেয়ার",
+    "priceTk": null,
+    "originalPrice": null,
+    "rating": 5.0,
+    "reviewsCount": 1,
+    "image": "https://scontent-den2-1.xx.fbcdn.net/v/t39.30808-6/891807821_122220979508791965_2007111125476697420_n.jpg?stp=dst-jpg_tt6&cstp=mx1024x1024&ctp=s1024x1024&_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_ohc=u7tGBwqJVFYQ7kNvwHcFF0T&_nc_oc=Adr97wyP7f0SR_VZZnaVFzh6PK1ynxp_Dn4QPBdsZ0PWDmXRWT44H1KTo_HJ2K3StOO5BW-2QoV4Dq41Nh56yXQX&_nc_zt=23&_nc_ht=scontent-den2-1.xx&_nc_gid=cDuqenNLHjOViuk5NLImSQ&_nc_ss=7020f&oh=00_AQSx6V86fFu-0zNheJp5zrZHA18IBvDxlupWhY8QJ72LlQ&oe=6AF7E9D8",
+    "badge": "স্কিন কেয়ার",
+    "benefit": "গভীর সমুদ্রের পানির মিনারেল আর হায়ালুরোনিক অ্যাসিডের হালকা হাইড্রেশন — ত্বকের মৃত কোষ আলতো করে পরিষ্কার করে ত্বককে করে তোলে সতেজ, মসৃণ ও উজ্জ্বল।",
+    "benefits": [
+      "গ্লোবুস্ট অফিশিয়াল ফেসবুক পেজ থেকে সরাসরি সিঙ্ক করা",
+      "১০০% আসল ও অনুমোদিত ডিস্ট্রিবিউটর থেকে সংগৃহীত"
+    ],
+    "ingredients": "প্রোডাক্টের প্যাকেজিং দেখুন অথবা বিস্তারিত জানতে হোয়াটসঅ্যাপে ইনবক্স করুন।",
+    "howToUse": "পরিষ্কার ত্বকে টোনার লাগিয়ে আলতো করে চেপে শোষণ করুন, তারপর সিরাম ও ময়েশ্চারাইজার ব্যবহার করুন।",
+    "inStock": true,
+    "facebookPostUrl": "https://www.facebook.com/122218596836791965/posts/122221536578791965"
+  },
+  {
+    "id": "fb-the-lab-oligo-hyaluronic-ampoule-20261109",
+    "name": "The Lab Oligo Hyaluronic Ampoule",
+    "category": "স্কিন কেয়ার",
+    "priceTk": null,
+    "originalPrice": null,
+    "rating": 5.0,
+    "reviewsCount": 1,
+    "image": "https://scontent-den2-1.xx.fbcdn.net/v/t39.30808-6/889971004_122220971660791965_1426015660887992698_n.jpg?stp=dst-jpg_tt6&cstp=mx1024x1024&ctp=s1024x1024&_nc_cat=106&ccb=1-7&_nc_sid=127cfc&_nc_ohc=6AaXWpVGtK0Q7kNvwGKtZfY&_nc_oc=AdpFCTDx5Zhu3DpwwycYgTDrsKjSikzExPc4vqVifVYogr1EYkLUdagSE1axbSdpHMh9TrUXzi5_3x483iZUtSFl&_nc_zt=23&_nc_ht=scontent-den2-1.xx&_nc_gid=z3TVDi-HN3yu2iD75BLFgQ&_nc_ss=7020f&oh=00_AQQWcEuOfXoMLz0-MODYDjfSL7mS1fLvDPZHQF1_obXNug&oe=6AF7B5CD",
+    "badge": "স্কিন কেয়ার",
+    "benefit": "ত্বকের গভীর হাইড্রেশন আর সতেজ উজ্জ্বলতার জন্য এই অ্যাম্পুল — হালকা, দ্রুত শোষিত ফর্মুলা ত্বককে করে তোলে নরম, মসৃণ ও হাইড্রেটেড।",
+    "benefits": [
+      "গ্লোবুস্ট অফিশিয়াল ফেসবুক পেজ থেকে সরাসরি সিঙ্ক করা",
+      "১০০% আসল ও অনুমোদিত ডিস্ট্রিবিউটর থেকে সংগৃহীত"
+    ],
+    "ingredients": "প্রোডাক্টের প্যাকেজিং দেখুন অথবা বিস্তারিত জানতে হোয়াটসঅ্যাপে ইনবক্স করুন।",
+    "howToUse": "পরিষ্কার ত্বকে টোনারের পর অ্যাম্পুল লাগিয়ে আলতো করে চেপে শোষণ করুন, তারপর ময়েশ্চারাইজার ব্যবহার করুন।",
+    "inStock": true,
+    "facebookPostUrl": "https://www.facebook.com/122218596836791965/posts/122221473242791965"
+  },
+  {
     "id": "fb-cosrx-snail-96-essence-20261109",
     "name": "COSRX Advanced Snail 96 Mucin Power Essence 100ml",
     "category": "স্কিন কেয়ার",
